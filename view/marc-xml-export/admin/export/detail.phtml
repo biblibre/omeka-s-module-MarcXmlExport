@@ -1,0 +1,37 @@
+<?php
+$escape = $this->plugin('escapeHtml');?>
+
+<tr id="export-<?php echo $id ;?>">
+    <td>
+        <?php echo $escape($this->i18n()->dateFormat($job->started())); ?>
+    </td>
+    <td>
+        <?php echo $name;?>
+    </td>
+    <td>
+        <?php echo $mappingName;?>
+    </td>
+    <td>
+        <?php echo $this->translate($resourceType);?>
+    </td>
+    <td>
+        <?php echo $this->hyperlink('', $query, ['class' => 'o-icon-external', 'target' => '_blank']); ?>
+    </td>
+    <td>
+        <div>
+        <?php echo $escape($this->translate($job->status()));?>
+        </div>
+        <span>
+            <?php echo $this->hyperlink($this->translate('Job details'), $this->url('admin/id', ['controller' => 'job', 'action' => 'show', 'id' => $job->id()])); ?>
+        </span>
+        <?php if ($job->log()): ?>
+            /
+            <span>
+                <?php echo $this->hyperlink($this->translate('Log'), $this->url('admin/id', ['controller' => 'job', 'action' => 'log', 'id' => $job->id()]), ['target' => '_blank']); ?>
+            </span>
+        <?php endif; ?>
+    </td>
+    <td>
+        <a class="o-icon-install" href="<?php echo $filePath ?>" download target="_blank"></a>
+    </td>
+</tr>
