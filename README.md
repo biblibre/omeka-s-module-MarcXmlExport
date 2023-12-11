@@ -1,6 +1,6 @@
 # MarcXml Export for Omeka S
 
-This module add possibility to export datas according to Marc XML format
+This module add possibility to export datas according to Marc XML format.
 
 ## Requirements
 
