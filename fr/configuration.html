@@ -84,14 +84,24 @@
 <section id="add-your-custom-mapping">
 <h2>Add your custom mapping<a class="headerlink" href="#add-your-custom-mapping" title="Link to this heading"></a></h2>
 <p>To add your own custom mapping add it on <cite>module.config.php</cite> file like:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="x">&#39;marcxmlexport_mapping&#39; =&gt; [</span>
+<span class="x">    &#39;factories&#39; =&gt; [</span>
+<span class="x">        &#39;your_mapping&#39; =&gt; Path\To\Your\Mapping::class,</span>
+<span class="x">    ],</span>
+<span class="x">];</span>
+</pre></div>
+</div>
 </section>
 <section id="cron-clean-up">
 <h2>Cron clean-up<a class="headerlink" href="#cron-clean-up" title="Link to this heading"></a></h2>
-<div class="admonition warning">
-<p class="admonition-title">Avertissement</p>
-<p>Need [OmekaS tool script](<a class="reference external" href="https://git.biblibre.com/biblibre/tools/src/branch/master/omeka-s/job-start">https://git.biblibre.com/biblibre/tools/src/branch/master/omeka-s/job-start</a>) from BiBlibre.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Need script from BibLibre public <a class="reference external" href="https://git.biblibre.com/biblibre/tools/src/branch/master/omeka-s/job-start">repository</a>.</p>
 </div>
 <p>A script to clean up the files stored in <cite>~/files/Marc_XML_Export/</cite> can be launched from the command line by specifying a “date” argument corresponding to the deadline for which you want to keep the exports.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>~/tools/omeka-s/job-start<span class="w"> </span>--user-id<span class="w"> </span>X<span class="w"> </span>--job-class<span class="w"> </span><span class="s1">&#39;MarcXmlExport\JobRemoveFilesJob&#39;</span><span class="w"> </span>--job-args<span class="w"> </span><span class="s1">&#39;{&quot;date&quot;: &quot;&lt;YEAR&gt;-&lt;MONTH&gt;-&lt;DAY&gt;&quot;}&#39;</span>
+</pre></div>
+</div>
 </section>
 </section>
 
