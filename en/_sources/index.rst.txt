@@ -9,7 +9,7 @@ This module produces and exports files in marcxml format from selected resources
 Requirements
 ------------
 
-The export path is currently hard-coded, so it is necessary to create a directory here:
+The export path is currently hard-coded, so it is necessary to create a directory:
 
 .. code-block:: bash
 
@@ -21,7 +21,7 @@ Where is the configuration
 Actually `Unimarc` mapping is include in this module but you can add your own custom mapping on `module.config.php` file. (Also see :doc:`configuration`)
 It will then be accessible when the import is created under "Select class mapping" dropdown
 
-More info about `Unimarc` mapping ::doc:`mapping-unimarc`
+More info about `Unimarc` mapping: ::doc:`mapping-unimarc`
 
 .. toctree::
    :maxdepth: 2
@@ -30,4 +30,3 @@ More info about `Unimarc` mapping ::doc:`mapping-unimarc`
    configuration
    features
    tutorials
-   mapping-unimarc
