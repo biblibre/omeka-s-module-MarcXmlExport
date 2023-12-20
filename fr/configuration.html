@@ -102,6 +102,9 @@
 <section id="cron-clean-up">
 <h2>Cron clean-up<a class="headerlink" href="#cron-clean-up" title="Link to this heading"></a></h2>
 <p>A script to clean up the files stored in <cite>~/files/Marc_XML_Export/</cite> can be launched from the command line by specifying a “date” argument corresponding to the deadline for which you want to keep the exports.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>~/tools/omeka-s/job-start<span class="w"> </span>--user-id<span class="w"> </span>X<span class="w"> </span>--job-class<span class="w"> </span><span class="s1">&#39;MarcXmlExport\JobRemoveFilesJob&#39;</span><span class="w"> </span>--job-args<span class="w"> </span><span class="s1">&#39;{&quot;date&quot;: &quot;&lt;YEAR&gt;-&lt;MONTH&gt;-&lt;DAY&gt;&quot;}&#39;</span>
+</pre></div>
+</div>
 </section>
 </section>
 
