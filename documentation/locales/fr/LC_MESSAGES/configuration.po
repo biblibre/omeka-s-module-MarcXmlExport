@@ -1,0 +1,49 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2023, BibLibre
+# This file is distributed under the same license as the MarcXmlExport
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MarcXmlExport \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-12-20 13:28+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: fr\n"
+"Language-Team: fr <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.13.1\n"
+
+#: ../../configuration.rst:2
+msgid "Configuration"
+msgstr ""
+
+#: ../../configuration.rst:5
+msgid "Add your custom mapping"
+msgstr "Ajoutez votre profil de correspondances personnalisé"
+
+#: ../../configuration.rst:7
+msgid "To add your own custom mapping add it on `module.config.php` file like:"
+msgstr "Pour ajouter votre propre profil de correspondances, ajoutez le au fichier `module.config.php` comme ceci:"
+
+#: ../../configuration.rst:18
+msgid "Cron clean-up"
+msgstr "Nettoyage récurrent par cronjob"
+
+#: ../../configuration.rst:20
+msgid "Need script from BibLibre public repository_."
+msgstr "Nécessite un script issu d'un repository_ public de BibLibre."
+
+#: ../../configuration.rst:24
+msgid ""
+"A script to clean up the files stored in `~/files/Marc_XML_Export/` can "
+"be launched from the command line by specifying a 'date' argument "
+"corresponding to the deadline for which you want to keep the exports."
+msgstr "Un script de nettoyage peut être lancé pour supprimé les fichiers stockés dans `~/files/Marc_XML_Export/`. Il prend un argument `date` qui représente la date limite à partir de laquelle les exports doivent être conservés."
+

@@ -6,16 +6,27 @@ How does it work ?
 
 This module produces and exports files in marcxml format from selected resources according to a defined mapping.
 
+Requirements
+------------
+
+The export path is currently hard-coded, so it is necessary to create a directory:
+
+.. code-block:: bash
+
+   mkdir OMEKAS_DIR\files\Marc_XML_Export
 
 Where is the configuration
 --------------------------
 
-Adding a custom mapping can only be done via a separate module integrating a mapping.
-It will then be accessible when the import is created under "Select class mapping" dropdown
+Actually `Unimarc` mapping is include in this module but you can add your own custom mapping on `module.config.php` file. (Also see :doc:`configuration`)
+It will then be accessible when the export is created under "Select class mapping" dropdown
+
+More info about `Unimarc` mapping: :doc:`mapping-unimarc`
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents
 
-   features
    configuration
+   features
+   tutorials

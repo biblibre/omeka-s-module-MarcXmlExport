@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="fr">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Configuration &mdash; MarcXmlExport  documentation</title>
+  <title>Configuration &mdash; Documentation MarcXmlExport </title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
 
@@ -15,13 +15,15 @@
   
         <script src="_static/jquery.js?v=5d32c60e"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=b3ba4146"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=3b36ad44"></script>
         <script src="_static/doctools.js?v=888ff710"></script>
         <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+        <script src="_static/translations.js?v=d99ca74e"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Features" href="features.html" /> 
+    <link rel="search" title="Recherche" href="search.html" />
+    <link rel="next" title="Fonctionnalités" href="features.html" />
+    <link rel="prev" title="Introduction" href="index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -37,7 +39,7 @@
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="text" name="q" placeholder="Rechercher docs" aria-label="Rechercher docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -45,9 +47,13 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="features.html">Features</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Configuration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#unimarc-mapping-french">Unimarc mapping (french)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#add-your-custom-mapping">Ajoutez votre profil de correspondances personnalisé</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cron-clean-up">Nettoyage récurrent par cronjob</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="features.html">Fonctionnalités</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutoriels</a></li>
 </ul>
 
         </div>
@@ -66,7 +72,7 @@
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
       <li class="breadcrumb-item active">Configuration</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/configuration.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/configuration.rst.txt" rel="nofollow"> Afficher la source de la page</a>
       </li>
   </ul>
   <hr/>
@@ -75,29 +81,37 @@
            <div itemprop="articleBody">
              
   <section id="configuration">
-<h1>Configuration<a class="headerlink" href="#configuration" title="Permalink to this heading"></a></h1>
-<p>Currently, product files are stored in a <cite>~/files/Marc_XML_Export</cite> folder, which you’ll need to create.</p>
-<img alt="_images/MarcXMLExport_new-config.png" src="_images/MarcXMLExport_new-config.png" />
-<p>To create a new export, simply submit the form, indicating :
-“The name of the export”
-“The mapping to be used”
-“Resource type”</p>
-<img alt="_images/MarcXMLExport_new-sidebar-sample.png" src="_images/MarcXMLExport_new-sidebar-sample.png" />
-<p>You will be able to filter the resources using different criteria.</p>
-<p>You can create a cron to clean up the files in the instance’s export folder. See README for technical purpose.</p>
+<h1>Configuration<a class="headerlink" href="#configuration" title="Lien permanent vers cette rubrique"></a></h1>
+<section id="add-your-custom-mapping">
+<h2>Ajoutez votre profil de correspondances personnalisé<a class="headerlink" href="#add-your-custom-mapping" title="Lien permanent vers cette rubrique"></a></h2>
+<p>Pour ajouter votre propre profil de correspondances, ajoutez le au fichier <cite>module.config.php</cite> comme ceci:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="x">&#39;marcxmlexport_mapping&#39; =&gt; [</span>
+<span class="x">    &#39;factories&#39; =&gt; [</span>
+<span class="x">        &#39;your_mapping&#39; =&gt; Path\To\Your\Mapping::class,</span>
+<span class="x">    ],</span>
+<span class="x">];</span>
+</pre></div>
+</div>
 </section>
-<section id="unimarc-mapping-french">
-<h1>Unimarc mapping (french)<a class="headerlink" href="#unimarc-mapping-french" title="Permalink to this heading"></a></h1>
-<p>To see (in french) which datas will be mapped</p>
-<p><a class="reference download internal" download="" href="_downloads/e48be467c2f6e163e3b0e027496d4109/MarcXMLExport_Mapping-from-OmekaS-datas.pdf"><code class="xref download docutils literal notranslate"><span class="pre">Mapping</span> <span class="pre">from</span> <span class="pre">OmekaS</span> <span class="pre">datas</span></code></a>.</p>
-<p><a class="reference download internal" download="" href="_downloads/5c644966667ae0fec9982cd20ff0cbc8/MarcXMLExport_Mapping-from-metadatas.pdf"><code class="xref download docutils literal notranslate"><span class="pre">Mapping</span> <span class="pre">from</span> <span class="pre">OmekaS</span> <span class="pre">metadatas</span></code></a>.</p>
+<section id="cron-clean-up">
+<h2>Nettoyage récurrent par cronjob<a class="headerlink" href="#cron-clean-up" title="Lien permanent vers cette rubrique"></a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Nécessite un script issu d’un <a class="reference external" href="https://git.biblibre.com/biblibre/tools/src/branch/master/omeka-s/job-start">repository</a> public de BibLibre.</p>
+</div>
+<p>Un script de nettoyage peut être lancé pour supprimé les fichiers stockés dans <cite>~/files/Marc_XML_Export/</cite>. Il prend un argument <cite>date</cite> qui représente la date limite à partir de laquelle les exports doivent être conservés.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>~/tools/omeka-s/job-start<span class="w"> </span>--user-id<span class="w"> </span>X<span class="w"> </span>--job-class<span class="w"> </span><span class="s1">&#39;MarcXmlExport\JobRemoveFilesJob&#39;</span><span class="w"> </span>--job-args<span class="w"> </span><span class="s1">&#39;{&quot;date&quot;: &quot;&lt;YEAR&gt;-&lt;MONTH&gt;-&lt;DAY&gt;&quot;}&#39;</span>
+</pre></div>
+</div>
+</section>
 </section>
 
 
            </div>
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="features.html" class="btn btn-neutral float-left" title="Features" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pied de page">
+        <a href="index.html" class="btn btn-neutral float-left" title="Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Précédent</a>
+        <a href="features.html" class="btn btn-neutral float-right" title="Fonctionnalités" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
@@ -106,9 +120,9 @@
     <p>&#169; Copyright 2023, BibLibre.</p>
   </div>
 
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  Compilé avec <a href="https://www.sphinx-doc.org/">Sphinx</a> en utilisant un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">thème</a>
+    fourni par <a href="https://readthedocs.org">Read the Docs</a>.
    
 
 </footer>
