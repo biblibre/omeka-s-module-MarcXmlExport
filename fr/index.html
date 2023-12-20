@@ -20,7 +20,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Recherche" href="search.html" />
-    <link rel="next" title="Features" href="features.html" /> 
+    <link rel="next" title="Configuration" href="configuration.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -44,9 +44,9 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="features.html">Features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="configuration.html#unimarc-mapping-french">Unimarc mapping (french)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="features.html">Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
 </ul>
 
         </div>
@@ -79,16 +79,55 @@
 <h2>How does it work ?<a class="headerlink" href="#how-does-it-work" title="Link to this heading"></a></h2>
 <p>This module produces and exports files in marcxml format from selected resources according to a defined mapping.</p>
 </section>
+<section id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Link to this heading"></a></h2>
+<p>The export path is currently hard-coded, so it is necessary to create a directory here :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<p>mkdir OMEKAS_DIRfilesMarc_XML_Export</p>
+</section>
 <section id="where-is-the-configuration">
 <h2>Where is the configuration<a class="headerlink" href="#where-is-the-configuration" title="Link to this heading"></a></h2>
-<p>Adding a custom mapping can only be done via a separate module integrating a mapping.
-It will then be accessible when the import is created under « Select class mapping » dropdown</p>
+<p>Actually <cite>Unimarc</cite> mapping is include in this module but you can add your own custom mapping on <cite>module.config.php</cite> file:</p>
+</section>
+</section>
+<section id="configuration">
+<h1>Configuration<a class="headerlink" href="#configuration" title="Link to this heading"></a></h1>
+<section id="add-your-custom-mapping">
+<h2>Add your custom mapping<a class="headerlink" href="#add-your-custom-mapping" title="Link to this heading"></a></h2>
+<p>To add your own custom mapping add it on <cite>module.config.php</cite> file like:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<dl>
+<dt>“marcxmlexport_mapping” =&gt; [</dt><dd><dl class="simple">
+<dt>“factories” =&gt; [</dt><dd><p>“your_mapping” =&gt; PathToYourMapping::class,</p>
+</dd>
+</dl>
+<p>],</p>
+</dd>
+</dl>
+<p>],</p>
+</section>
+<section id="cron-clean-up">
+<h2>Cron clean-up<a class="headerlink" href="#cron-clean-up" title="Link to this heading"></a></h2>
+<p>A script to clean up the files stored in <cite>~/files/Marc_XML_Export/</cite> can be launched from the command line by specifying a “date” argument corresponding to the deadline for which you want to keep the exports.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>~/tools/omeka-s/job-start<span class="w"> </span>--user-id<span class="w"> </span>X<span class="w"> </span>--job-class<span class="w"> </span><span class="s1">&#39;MarcXmlExport\JobRemoveFilesJob&#39;</span><span class="w"> </span>--job-args<span class="w"> </span><span class="s1">&#39;{&quot;date&quot;: &quot;&lt;YEAR&gt;-&lt;MONTH&gt;-&lt;DAY&gt;&quot;}&#39;</span>
+</pre></div>
+</div>
+<p>It will then be accessible when the import is created under « Select class mapping » dropdown</p>
+<p><cite>Unimarc</cite> mapping:</p>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#add-your-custom-mapping">Add your custom mapping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#cron-clean-up">Cron clean-up</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="features.html">Features</a></li>
-<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="configuration.html#unimarc-mapping-french">Unimarc mapping (french)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
 </ul>
 </div>
 </section>
@@ -98,7 +137,7 @@ It will then be accessible when the import is created under « Select class map
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pied de page">
-        <a href="features.html" class="btn btn-neutral float-right" title="Features" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="configuration.html" class="btn btn-neutral float-right" title="Configuration" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

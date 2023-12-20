@@ -20,7 +20,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Recherche" href="search.html" />
-    <link rel="prev" title="Features" href="features.html" /> 
+    <link rel="next" title="Features" href="features.html" />
+    <link rel="prev" title="Introduction" href="index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -44,9 +45,13 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#add-your-custom-mapping">Add your custom mapping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cron-clean-up">Cron clean-up</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="features.html">Features</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Configuration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#unimarc-mapping-french">Unimarc mapping (french)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
 </ul>
 
         </div>
@@ -75,28 +80,37 @@
              
   <section id="configuration">
 <h1>Configuration<a class="headerlink" href="#configuration" title="Link to this heading"></a></h1>
-<p>Currently, product files are stored in a <cite>~/files/Marc_XML_Export</cite> folder, which you’ll need to create.</p>
-<img alt="_images/MarcXMLExport_new-config.png" src="_images/MarcXMLExport_new-config.png" />
-<p>To create a new export, simply submit the form, indicating :
-« The name of the export »
-« The mapping to be used »
-« Resource type »</p>
-<img alt="_images/MarcXMLExport_new-sidebar-sample.png" src="_images/MarcXMLExport_new-sidebar-sample.png" />
-<p>You will be able to filter the resources using different criteria.</p>
-<p>You can create a cron to clean up the files in the instance’s export folder. See README for technical purpose.</p>
+<section id="add-your-custom-mapping">
+<h2>Add your custom mapping<a class="headerlink" href="#add-your-custom-mapping" title="Link to this heading"></a></h2>
+<p>To add your own custom mapping add it on <cite>module.config.php</cite> file like:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<dl>
+<dt>“marcxmlexport_mapping” =&gt; [</dt><dd><dl class="simple">
+<dt>“factories” =&gt; [</dt><dd><p>“your_mapping” =&gt; PathToYourMapping::class,</p>
+</dd>
+</dl>
+<p>],</p>
+</dd>
+</dl>
+<p>],</p>
 </section>
-<section id="unimarc-mapping-french">
-<h1>Unimarc mapping (french)<a class="headerlink" href="#unimarc-mapping-french" title="Link to this heading"></a></h1>
-<p>To see (in french) which datas will be mapped</p>
-<p><a class="reference download internal" download="" href="_downloads/e48be467c2f6e163e3b0e027496d4109/MarcXMLExport_Mapping-from-OmekaS-datas.pdf"><code class="xref download docutils literal notranslate"><span class="pre">Mapping</span> <span class="pre">from</span> <span class="pre">OmekaS</span> <span class="pre">datas</span></code></a>.</p>
-<p><a class="reference download internal" download="" href="_downloads/5c644966667ae0fec9982cd20ff0cbc8/MarcXMLExport_Mapping-from-metadatas.pdf"><code class="xref download docutils literal notranslate"><span class="pre">Mapping</span> <span class="pre">from</span> <span class="pre">OmekaS</span> <span class="pre">metadatas</span></code></a>.</p>
+<section id="cron-clean-up">
+<h2>Cron clean-up<a class="headerlink" href="#cron-clean-up" title="Link to this heading"></a></h2>
+<p>A script to clean up the files stored in <cite>~/files/Marc_XML_Export/</cite> can be launched from the command line by specifying a “date” argument corresponding to the deadline for which you want to keep the exports.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>~/tools/omeka-s/job-start<span class="w"> </span>--user-id<span class="w"> </span>X<span class="w"> </span>--job-class<span class="w"> </span><span class="s1">&#39;MarcXmlExport\JobRemoveFilesJob&#39;</span><span class="w"> </span>--job-args<span class="w"> </span><span class="s1">&#39;{&quot;date&quot;: &quot;&lt;YEAR&gt;-&lt;MONTH&gt;-&lt;DAY&gt;&quot;}&#39;</span>
+</pre></div>
+</div>
+</section>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pied de page">
-        <a href="features.html" class="btn btn-neutral float-left" title="Features" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Précédent</a>
+        <a href="index.html" class="btn btn-neutral float-left" title="Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Précédent</a>
+        <a href="features.html" class="btn btn-neutral float-right" title="Features" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

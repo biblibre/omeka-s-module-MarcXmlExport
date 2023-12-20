@@ -1,19 +1,25 @@
 Configuration
 =============
 
-Currently, product files are stored in a `~/files/Marc_XML_Export` folder, which you'll need to create.
+Add your custom mapping
+-----------------------
 
-.. image:: images/MarcXMLExport_new-config.png
+To add your own custom mapping add it on `module.config.php` file like:
 
-To create a new export, simply submit the form, indicating : 
-"The name of the export"
-"The mapping to be used"
-"Resource type"
+.. code-block:: php
 
-.. image:: images/MarcXMLExport_new-sidebar-sample.png
+'marcxmlexport_mapping' => [
+            'factories' => [
+                'your_mapping' => Path\To\Your\Mapping::class,
+            ],
+],
 
-You will be able to filter the resources using different criteria.
+Cron clean-up
+-------------
 
-You can create a cron to clean up the files in the instance's export folder. See README for technical purpose.
+A script to clean up the files stored in `~/files/Marc_XML_Export/` can be launched from the command line by specifying a 'date' argument corresponding to the deadline for which you want to keep the exports.
 
-.. include:: mapping-unimarc.rst
+.. code-block:: bash
+
+ ~/tools/omeka-s/job-start --user-id X --job-class 'MarcXmlExport\JobRemoveFilesJob' --job-args '{"date": "<YEAR>-<MONTH>-<DAY>"}' 
+
