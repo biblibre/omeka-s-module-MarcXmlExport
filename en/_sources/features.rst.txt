@@ -12,4 +12,4 @@ And, of course, you can download the resulting file.
 
 Also you can see to the tutorial section:
 
-:ref:`tutorials`
+:doc:`tutorials`

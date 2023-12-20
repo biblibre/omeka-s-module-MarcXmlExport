@@ -9,9 +9,10 @@ This module produces and exports files in marcxml format from selected resources
 Requirements
 ------------
 
-The export path is currently hard-coded, so it is necessary to create a directory here : 
+.. highlight:: bash
 
-.. code-block:: bash
+The export path is currently hard-coded, so it is necessary to create a directory here ::
+
 mkdir OMEKAS_DIR\files\Marc_XML_Export
 
 
@@ -20,13 +21,13 @@ Where is the configuration
 
 Actually `Unimarc` mapping is include in this module but you can add your own custom mapping on `module.config.php` file:
 
-:ref:`configuration`
+:doc:`configuration`
 
 It will then be accessible when the import is created under "Select class mapping" dropdown
 
 `Unimarc` mapping:
 
-:ref:`mapping-unimarc`
+:doc:`mapping-unimarc`
 
 .. toctree::
    :maxdepth: 2

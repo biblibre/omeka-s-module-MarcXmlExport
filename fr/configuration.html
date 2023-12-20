@@ -84,11 +84,9 @@
 <section id="add-your-custom-mapping">
 <h2>Add your custom mapping<a class="headerlink" href="#add-your-custom-mapping" title="Link to this heading"></a></h2>
 <p>To add your own custom mapping add it on <cite>module.config.php</cite> file like:</p>
-<div class="highlight-php notranslate"><div class="highlight"><pre><span></span>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="x">&#39;marcxmlexport_mapping&#39; =&gt; [</span>
 </pre></div>
 </div>
-<p>&lt;?php
-“marcxmlexport_mapping” =&gt; [</p>
 <blockquote>
 <div><dl class="simple">
 <dt>“factories” =&gt; [</dt><dd><p>“your_mapping” =&gt; PathToYourMapping::class,</p>
@@ -96,16 +94,14 @@
 </dl>
 <p>],</p>
 </div></blockquote>
-<p>];
-?&gt;</p>
+<p>];</p>
 </section>
 <section id="cron-clean-up">
 <h2>Cron clean-up<a class="headerlink" href="#cron-clean-up" title="Link to this heading"></a></h2>
-<p>A script to clean up the files stored in <cite>~/files/Marc_XML_Export/</cite> can be launched from the command line by specifying a “date” argument corresponding to the deadline for which you want to keep the exports.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>
+<p>A script to clean up the files stored in <cite>~/files/Marc_XML_Export/</cite> can be launched from the command line by specifying a “date” argument corresponding to the deadline for which you want to keep the exports.:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>~/tools/omeka-s/job-start<span class="w"> </span>--user-id<span class="w"> </span>X<span class="w"> </span>--job-class<span class="w"> </span><span class="s1">&#39;MarcXmlExport\JobRemoveFilesJob&#39;</span><span class="w"> </span>--job-args<span class="w"> </span><span class="s1">&#39;{&quot;date&quot;: &quot;&lt;YEAR&gt;-&lt;MONTH&gt;-&lt;DAY&gt;&quot;}&#39;</span>
 </pre></div>
 </div>
-<p>~/tools/omeka-s/job-start –user-id X –job-class “MarcXmlExportJobRemoveFilesJob” –job-args “{« date »: « &lt;YEAR&gt;-&lt;MONTH&gt;-&lt;DAY&gt; »}”</p>
 </section>
 </section>
 
