@@ -6,16 +6,19 @@ Add your custom mapping
 
 To add your own custom mapping add it on `module.config.php` file like:
 
-`'marcxmlexport_mapping' => [
+.. code-block:: php
+<?php
+'marcxmlexport_mapping' => [
     'factories' => [
         'your_mapping' => Path\To\Your\Mapping::class,
     ],
-]`
+];
+?>
 
 Cron clean-up
 -------------
 
 A script to clean up the files stored in `~/files/Marc_XML_Export/` can be launched from the command line by specifying a 'date' argument corresponding to the deadline for which you want to keep the exports.
 
-`~/tools/omeka-s/job-start --user-id X --job-class 'MarcXmlExport\JobRemoveFilesJob' --job-args '{"date": "<YEAR>-<MONTH>-<DAY>"}'`
-
+.. code-block:: bash
+~/tools/omeka-s/job-start --user-id X --job-class 'MarcXmlExport\JobRemoveFilesJob' --job-args '{"date": "<YEAR>-<MONTH>-<DAY>"}'

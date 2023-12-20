@@ -16,4 +16,4 @@ You will be able to filter the resources using different criteria.
 
 You can create a cron to clean up the files in the instance's export folder. See README for technical purpose.
 
-.. ref:: mapping-unimarc.rst
+:ref:`mapping-unimarc`

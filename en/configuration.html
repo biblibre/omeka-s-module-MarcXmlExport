@@ -83,20 +83,28 @@
 <section id="add-your-custom-mapping">
 <h2>Add your custom mapping<a class="headerlink" href="#add-your-custom-mapping" title="Link to this heading"></a></h2>
 <p>To add your own custom mapping add it on <cite>module.config.php</cite> file like:</p>
-<dl>
-<dt><a href="#id1"><span class="problematic" id="id2">`</span></a>’marcxmlexport_mapping’ =&gt; [</dt><dd><dl class="simple">
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<p>&lt;?php
+‘marcxmlexport_mapping’ =&gt; [</p>
+<blockquote>
+<div><dl class="simple">
 <dt>‘factories’ =&gt; [</dt><dd><p>‘your_mapping’ =&gt; PathToYourMapping::class,</p>
 </dd>
 </dl>
 <p>],</p>
-</dd>
-</dl>
-<p>]`</p>
+</div></blockquote>
+<p>];
+?&gt;</p>
 </section>
 <section id="cron-clean-up">
 <h2>Cron clean-up<a class="headerlink" href="#cron-clean-up" title="Link to this heading"></a></h2>
 <p>A script to clean up the files stored in <cite>~/files/Marc_XML_Export/</cite> can be launched from the command line by specifying a ‘date’ argument corresponding to the deadline for which you want to keep the exports.</p>
-<p><cite>~/tools/omeka-s/job-start –user-id X –job-class ‘MarcXmlExportJobRemoveFilesJob’ –job-args ‘{“date”: “&lt;YEAR&gt;-&lt;MONTH&gt;-&lt;DAY&gt;”}’</cite></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<p>~/tools/omeka-s/job-start –user-id X –job-class ‘MarcXmlExportJobRemoveFilesJob’ –job-args ‘{“date”: “&lt;YEAR&gt;-&lt;MONTH&gt;-&lt;DAY&gt;”}’</p>
 </section>
 </section>
 

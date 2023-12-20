@@ -11,4 +11,5 @@ On this page you'll find a summary of the export details and the list of exporte
 And, of course, you can download the resulting file.
 
 Also you can see to the tutorial section:
-.. ref:: tutorials.rst
+
+:ref:`tutorials`
