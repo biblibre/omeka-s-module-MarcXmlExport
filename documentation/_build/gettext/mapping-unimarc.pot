@@ -1,0 +1,33 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2023, BibLibre
+# This file is distributed under the same license as the MarcXmlExport package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MarcXmlExport \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-12-20 13:28+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../mapping-unimarc.rst:2
+msgid "Unimarc mapping (french)"
+msgstr ""
+
+#: ../../mapping-unimarc.rst:4
+msgid "To see (in french) which datas will be mapped"
+msgstr ""
+
+#: ../../mapping-unimarc.rst:6
+msgid ":download:`Mapping from OmekaS datas <mapping-files/MarcXMLExport_Mapping-from-OmekaS-datas.pdf>`."
+msgstr ""
+
+#: ../../mapping-unimarc.rst:8
+msgid ":download:`Mapping from OmekaS metadatas <mapping-files/MarcXMLExport_Mapping-from-metadatas.pdf>`."
+msgstr ""

@@ -1,0 +1,47 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2023, BibLibre
+# This file is distributed under the same license as the MarcXmlExport
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MarcXmlExport \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-12-20 13:28+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: fr\n"
+"Language-Team: fr <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.13.1\n"
+
+#: ../../features.rst:2
+msgid "Features"
+msgstr "Fonctionnalités"
+
+#: ../../features.rst:4
+msgid ""
+"To retrieve your file or view previous exports, go to the past exports "
+"page."
+msgstr "Pour retrouvez vos fichiers ou voir vos exports précédents rendez vous à la section correspondante `Exports passés`."
+
+#: ../../features.rst:6
+msgid "(Admin > Export Marc Xml > Past exports)"
+msgstr "(Admin > Export Marc Xml > Exports passés)"
+
+#: ../../features.rst:10
+msgid ""
+"On this page you'll find a summary of the export details and the list of "
+"exported resources (provided they're still in the database). And, of "
+"course, you can download the resulting file."
+msgstr "Sur cette page vous avez un résumé détaillé de vos exports avec la possibilité de télécharger vos fichiers."
+
+#: ../../features.rst:13
+msgid "Also you can see to the tutorial section: :doc:`tutorials`"
+msgstr "Voir aussi la page des tutoriels :doc:`tutorials`"
+
