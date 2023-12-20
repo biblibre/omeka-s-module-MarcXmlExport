@@ -83,23 +83,13 @@
 <section id="add-your-custom-mapping">
 <h2>Add your custom mapping<a class="headerlink" href="#add-your-custom-mapping" title="Link to this heading"></a></h2>
 <p>To add your own custom mapping add it on <cite>module.config.php</cite> file like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">..</span> <span class="n">code</span><span class="o">-</span><span class="n">block</span><span class="p">::</span>
-</pre></div>
-</div>
-<blockquote>
-<div><dl>
-<dt>‘marcxmlexport_mapping’ =&gt; [</dt><dd><dl class="simple">
-<dt>‘factories’ =&gt; [</dt><dd><p>‘your_mapping’ =&gt; PathToYourMapping::class,</p>
-</dd>
-</dl>
-<p>],</p>
-</dd>
-</dl>
-<p>];</p>
-</div></blockquote>
 </section>
 <section id="cron-clean-up">
 <h2>Cron clean-up<a class="headerlink" href="#cron-clean-up" title="Link to this heading"></a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Need [OmekaS tool script](<a class="reference external" href="https://git.biblibre.com/biblibre/tools/src/branch/master/omeka-s/job-start">https://git.biblibre.com/biblibre/tools/src/branch/master/omeka-s/job-start</a>) from BiBlibre.</p>
+</div>
 <p>A script to clean up the files stored in <cite>~/files/Marc_XML_Export/</cite> can be launched from the command line by specifying a ‘date’ argument corresponding to the deadline for which you want to keep the exports.</p>
 </section>
 </section>

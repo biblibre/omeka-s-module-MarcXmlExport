@@ -9,9 +9,10 @@ This module produces and exports files in marcxml format from selected resources
 Requirements
 ------------
 
-The export path is currently hard-coded, so it is necessary to create a directory here ::
+The export path is currently hard-coded, so it is necessary to create a directory here:
 
-.. code-block:: bash mkdir OMEKAS_DIR\files\Marc_XML_Export
+.. code-block:: bash 
+   mkdir OMEKAS_DIR\files\Marc_XML_Export
 
 Where is the configuration
 --------------------------
