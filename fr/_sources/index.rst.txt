@@ -11,9 +11,7 @@ Requirements
 
 The export path is currently hard-coded, so it is necessary to create a directory here : 
 
-.. code-block:: bash
-
-mkdir OMEKAS_DIR\files\Marc_XML_Export
+`mkdir OMEKAS_DIR\files\Marc_XML_Export`
 
 
 Where is the configuration
@@ -21,13 +19,13 @@ Where is the configuration
 
 Actually `Unimarc` mapping is include in this module but you can add your own custom mapping on `module.config.php` file:
 
-.. include:: configuration.rst
+.. ref:: configuration.rst
 
 It will then be accessible when the import is created under "Select class mapping" dropdown
 
 `Unimarc` mapping:
 
-.. doc:: mapping-unimarc.rst
+.. ref:: mapping-unimarc.rst
 
 .. toctree::
    :maxdepth: 2
@@ -36,3 +34,4 @@ It will then be accessible when the import is created under "Select class mappin
    configuration
    features
    tutorials
+   mapping-unimarc

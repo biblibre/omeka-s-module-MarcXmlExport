@@ -46,6 +46,7 @@
 <li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="features.html">Features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mapping-unimarc.html">Unimarc mapping (french)</a></li>
 </ul>
 
         </div>
@@ -81,40 +82,11 @@
 <section id="requirements">
 <h2>Requirements<a class="headerlink" href="#requirements" title="Link to this heading"></a></h2>
 <p>The export path is currently hard-coded, so it is necessary to create a directory here :</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-<p>mkdir OMEKAS_DIRfilesMarc_XML_Export</p>
+<p><cite>mkdir OMEKAS_DIRfilesMarc_XML_Export</cite></p>
 </section>
 <section id="where-is-the-configuration">
 <h2>Where is the configuration<a class="headerlink" href="#where-is-the-configuration" title="Link to this heading"></a></h2>
 <p>Actually <cite>Unimarc</cite> mapping is include in this module but you can add your own custom mapping on <cite>module.config.php</cite> file:</p>
-</section>
-</section>
-<section id="configuration">
-<h1>Configuration<a class="headerlink" href="#configuration" title="Link to this heading"></a></h1>
-<section id="add-your-custom-mapping">
-<h2>Add your custom mapping<a class="headerlink" href="#add-your-custom-mapping" title="Link to this heading"></a></h2>
-<p>To add your own custom mapping add it on <cite>module.config.php</cite> file like:</p>
-<div class="highlight-php notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-<dl>
-<dt>‘marcxmlexport_mapping’ =&gt; [</dt><dd><dl class="simple">
-<dt>‘factories’ =&gt; [</dt><dd><p>‘your_mapping’ =&gt; PathToYourMapping::class,</p>
-</dd>
-</dl>
-<p>],</p>
-</dd>
-</dl>
-<p>],</p>
-</section>
-<section id="cron-clean-up">
-<h2>Cron clean-up<a class="headerlink" href="#cron-clean-up" title="Link to this heading"></a></h2>
-<p>A script to clean up the files stored in <cite>~/files/Marc_XML_Export/</cite> can be launched from the command line by specifying a ‘date’ argument corresponding to the deadline for which you want to keep the exports.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>~/tools/omeka-s/job-start<span class="w"> </span>--user-id<span class="w"> </span>X<span class="w"> </span>--job-class<span class="w"> </span><span class="s1">&#39;MarcXmlExport\JobRemoveFilesJob&#39;</span><span class="w"> </span>--job-args<span class="w"> </span><span class="s1">&#39;{&quot;date&quot;: &quot;&lt;YEAR&gt;-&lt;MONTH&gt;-&lt;DAY&gt;&quot;}&#39;</span>
-</pre></div>
-</div>
 <p>It will then be accessible when the import is created under “Select class mapping” dropdown</p>
 <p><cite>Unimarc</cite> mapping:</p>
 <div class="toctree-wrapper compound">
@@ -127,6 +99,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="features.html">Features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mapping-unimarc.html">Unimarc mapping (french)</a></li>
 </ul>
 </div>
 </section>
