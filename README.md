@@ -1,22 +1,31 @@
-# MarcXml Export for Omeka S
+# MarcXml Export
 
-This module add possibility to export datas according to Marc XML format
+This module produces and exports files in marcxml format from selected resources according to a defined mapping.
+
+The complete documentation of MarcXmlExport can be found [here](https://biblibre.github.io/omeka-s-module-MarcXmlExport).
+
+## Rationale
+
+This module export a set of selected resources in a marcxml file which can be easily downloadable after.
 
 ## Requirements
 
-The export path is currently hard-coded, so it is necessary to create a directory here : 
+* Omeka S >= 3.0.0
+
+* The export path is currently hard-coded, so it is necessary to create a directory here : 
 
 ```bash
 mkdir OMEKAS_DIR\files\Marc_XML_Export
 ```
 
-## Description
+## Quick start
 
-The mapping is completely hard-coded and cannot be configured by the interface.
+1. [Add the module to Omeka S](https://omeka.org/s/docs/user-manual/modules/#adding-modules-to-omeka-s)
+2. Login to the admin interface, and use it.
 
-But this module can receive different mapping by adding another modules and using the config to use it.
+## Features
 
-Like this for example :
+Actually this module includes an '_Unimarc_' mapping but you can also add your own custom mapping by adding on `module.config.php`:
 
 ```php
 'marcxmlexport_mapping' => [
@@ -26,32 +35,29 @@ Like this for example :
 ],
 ```
 
-The mapping is completely hard-coded and cannot be configured by the interface.
+Then, choose the type of export (type of resource to export + mapping to use) and it will be launched the background task. 
 
-From the moment you choose the type of export (type of resource to export + mapping to use) you only have to launch the background task. 
-
-You can then retrieve your files from the main page of the module via the download link.
+You can download your exports from the _Past Exports_ page via the download icon link.
 
 A script to clean up the files stored in ```/files/Marc_XML_Export/``` can be launched from the command line by specifying a 'date' argument corresponding to the deadline for which you want to keep the exports.
 
-Example, I want to keep the exports since 2023-01-01 so I launch the job via : 
-
 ```bash
- ~/tools/omeka-s/job-start --user-id X --job-class 'MarcXmlExport\JobRemoveFilesJob' --job-args '{"date": "2023-01-01"}' 
+ ~/tools/omeka-s/job-start --user-id X --job-class 'MarcXmlExport\JobRemoveFilesJob' --job-args '{"date": "<YEAR>-<MONTH>-<DAY>"}' 
  ```
 
 exports prior to this date will be deleted from the MarcXmlExport module table and the files in the ```/files/Marc_XML_Export/``` directory will also be deleted.
 
-## Warning
+## How to contribute
 
-Use it at your own risk.
+You can contribute to this module by adding issues directly [here](https://github.com/biblibre/omeka-s-module-MarcXmlExport/issues).
 
-It's always recommended to backup your files and your databases and to check your archives regularly so you can roll back if needed.
+## Contributors / Sponsors
 
-## License
+Contributors:
+* [ThibaudGLT](https://github.com/ThibaudGLT)
 
-This plugin is published under the GNU General Public License v3.0
+## Licence
 
-## Copyright
+MarcXmlExport is distributed under the GNU General Public License, version 3. The full text of this license is given in the LICENSE file.
 
-Copyright BibLibre, 2015-2023
+Created by [BibLibre](https://www.biblibre.com).
