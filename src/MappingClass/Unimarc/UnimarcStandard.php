@@ -32,73 +32,10 @@ class UnimarcStandard extends AbstractMappingClass
                 $collection->appendChild($record);
 
                 $resourceType = $resource->getResourceJsonLdType();
-                $resourceTypeValues = [
-                    'o:ItemSet' => "collection",
-                    'o:Item' => "item",
-                    'o:Media' => "media",
-                ];
-                $repeatableFieldsMapping = [];
-
-                $fieldsMapping = [
-                    '001' => $resource->id(),
-                    '099' => ['c' => $resource->created()->format('Y-m-d'), 'd' => $resource->modified()->format('Y-m-d')],
-                    '299' => ['a' => "OMEKAS", 'b' => $resourceTypeValues[$resourceType]],
-                    '956' => ['u' => $resource->thumbnailDisplayUrl('medium')],
-                    '995' => ['a' => 'Bibliothèque numérique', 'b' => 'Bibliothèque numérique', 'f' => 'omekas-' . $resource->id(), 'r' => 'lz'],
-                ];
-
-                $metadatasMapping = [
-                    'dcterms:source' => ['tag' => '995', 'repeatable' => true, 'subfield' => 'a', 'repeatable_subfield' => false],
-                    'bibo:locator' => ['tag' => '995', 'repeatable' => false, 'subfield' => 'k', 'repeatable_subfield' => false],
-                    'dcterms:type' => ['tag' => '099', 'repeatable' => false, 'subfield' => 't', 'repeatable_subfield' => false],
-                    'dcterms:language' => ['tag' => '101', 'repeatable' => false, 'subfield' => 'a', 'repeatable_subfield' => true],
-                    'dcterms:title' => ['tag' => '200', 'repeatable' => false, 'subfield' => 'a', 'repeatable_subfield' => true],
-                    'dcterms:alternative' => ['tag' => '200', 'repeatable' => false, 'subfield' => 'd', 'repeatable_subfield' => true],
-                    'dcterms:format' => ['tag' => '215', 'repeatable' => true, 'subfield' => 'a', 'repeatable_subfield' => true],
-                    'dcterms:description' => ['tag' => '300', 'repeatable' => true, 'subfield' => 'a', 'repeatable_subfield' => false],
-                    'dcterms:provenance' => ['tag' => '317', 'repeatable' => true, 'subfield' => 'a', 'repeatable_subfield' => false],
-                    'dcterms:abstract' => ['tag' => '330', 'repeatable' => true, 'subfield' => 'a', 'repeatable_subfield' => false],
-                    'foaf:primaryTopic' => ['tag' => '600', 'repeatable' => true, 'subfield' => 'a', 'repeatable_subfield' => false],
-                    'foaf:theme' => ['tag' => '604', 'repeatable' => true, 'subfield' => 'a', 'repeatable_subfield' => false],
-                    'dcterms:subject' => ['tag' => '610', 'repeatable' => true, 'subfield' => 'a', 'repeatable_subfield' => true],
-                    'foaf:topic' => ['tag' => '615', 'repeatable' => true, 'subfield' => 'a', 'repeatable_subfield' => false],
-                    'dcterms:spatial' => ['tag' => '660', 'repeatable' => true, 'subfield' => 'a', 'repeatable_subfield' => false],
-                    'dcterms:temporal' => ['tag' => '661', 'repeatable' => true, 'subfield' => 'a', 'repeatable_subfield' => false],
-                    'dcterms:creator' => ['tag' => '700', 'repeatable' => false, 'subfield' => 'a', 'repeatable_subfield' => false],
-                    'dcterms:contributor' => ['tag' => '702', 'repeatable' => true, 'subfield' => 'g', 'repeatable_subfield' => false],
-                    'koha:biblionumber' => ['tag' => '035', 'repeatable' => true, 'subfield' => 'a', 'repeatable_subfield' => false],
-                    'dcterms:relation' => ['tag' => '856', 'repeatable' => true, 'subfield' => 'a', 'repeatable_subfield' => true],
-                    'dcterms:instructionalMethod' => ['tag' => '901', 'repeatable' => true, 'subfield' => 'a', 'repeatable_subfield' => true],
-                    'dcterms:rights' => ['tag' => '371', 'repeatable' => true, 'subfield' => 'a', 'repeatable_subfield' => false],
-                    'dcterms:rightsHolder' => ['tag' => '371', 'repeatable' => true, 'subfield' => 'b', 'repeatable_subfield' => false],
-                ];
-
-                if ($resourceType === 'o:ItemSet') {
-                    $ancestors = $this->itemSetsTreeService->getAncestors($resource);
-                    if (isset($ancestors)) {
-                        foreach ($ancestors as $ancestor) {
-                            $fieldsMapping['079'] = ['a' => $ancestor->id(), 'b' => "Collection parent", 'c' => $ancestor->title()];
-                        }
-                    }
-                    $metadatasMapping['dcterms:resume'] = ['tag' => '300', 'repeatable' => true, 'subfield' => 'a', 'repeatable_subfield' => false];
-                    $metadatasMapping['dcterms:date'] = ['tag' => '214', 'repeatable' => true, 'subfield' => 'd', 'repeatable_subfield' => true];
-                }
-
-                if ($resourceType === 'o:Item') {
-                    if ($resource->itemSets()) {
-                        foreach ($resource->itemSets() as $itemSet) {
-                            $repeatableFieldsMapping['069'][] = ['a' => $itemSet->id(), 'b' => "Collection", 'c' => $itemSet->title()];
-                        }
-                    }
-                    $metadatasMapping['dcterms:publisher'] = ['tag' => '214', 'repeatable' => true, 'subfield' => 'a', 'repeatable_subfield' => false];
-                    $metadatasMapping['dcterms:issued'] = ['tag' => '214', 'repeatable' => true, 'subfield' => 'd', 'repeatable_subfield' => true];
-                }
-
-                if ($resourceType === 'o:Media') {
-                    $fieldsMapping['089'] = ['a' => $resource->item()->id(), 'b' => "Item", 'c' => $resource->item()->title()];
-                    $metadatasMapping['dcterms:medium'] = ['tag' => '324', 'repeatable' => false, 'subfield' => 'a', 'repeatable_subfield' => false];
-                    $metadatasMapping['bibo:owner'] = ['tag' => '345', 'repeatable' => false, 'subfield' => 'a', 'repeatable_subfield' => true];
-                }
+                                
+                $fieldsMapping = $this->getFieldMapping($resource);
+                $metadatasMapping = $this->getMetadatasMapping($resourceType);
+                $repeatableFieldsMapping = $this->getRepeatableFieldsMapping($resourceType);
 
                 foreach ($fieldsMapping as $tag => $value) {
                     $this->addElement($tag, $value, $record);
@@ -305,5 +242,104 @@ class UnimarcStandard extends AbstractMappingClass
             $textValue = htmlspecialchars($textValue, ENT_XML1);
         }
         return trim($textValue);
+    }
+
+    protected function getFieldMapping($resource)
+    {
+        $resourceType = $resource->getResourceJsonLdType();
+        $resourceTypeValues = [
+            'o:ItemSet' => "collection",
+            'o:Item' => "item",
+            'o:Media' => "media",
+        ];
+
+        $fieldsMapping = [
+            '001' => $resource->id(),
+            '099' => ['c' => $resource->created()->format('Y-m-d'), 'd' => $resource->modified()->format('Y-m-d')],
+            '299' => ['a' => "OMEKAS", 'b' => $resourceTypeValues[$resourceType]],
+            '956' => ['u' => $resource->thumbnailDisplayUrl('medium')],
+            '995' => ['a' => 'Bibliothèque numérique', 'b' => 'Bibliothèque numérique', 'f' => 'omekas-' . $resource->id(), 'r' => 'lz'],
+        ];
+
+        if ($resourceType === 'o:ItemSet') {
+            $ancestors = $this->itemSetsTreeService->getAncestors($resource);
+            if (isset($ancestors)) {
+                foreach ($ancestors as $ancestor) {
+                    $fieldsMapping['079'] = ['a' => $ancestor->id(), 'b' => "Collection parent", 'c' => $ancestor->title()];
+                }
+            }
+        }
+        if ($resourceType === 'o:Media') {
+            $fieldsMapping['089'] = ['a' => $resource->item()->id(), 'b' => "Item", 'c' => $resource->item()->title()];
+        }
+
+        return $fieldsMapping;
+    }
+
+    protected function getMetadatasMapping($resourceType)
+    {
+        $metadatasMapping = [
+            'dcterms:source' => ['tag' => '995', 'repeatable' => true, 'subfield' => 'a', 'repeatable_subfield' => false],
+            'bibo:locator' => ['tag' => '995', 'repeatable' => false, 'subfield' => 'k', 'repeatable_subfield' => false],
+            'dcterms:type' => ['tag' => '099', 'repeatable' => false, 'subfield' => 't', 'repeatable_subfield' => false],
+            'dcterms:language' => ['tag' => '101', 'repeatable' => false, 'subfield' => 'a', 'repeatable_subfield' => true],
+            'dcterms:title' => ['tag' => '200', 'repeatable' => false, 'subfield' => 'a', 'repeatable_subfield' => true],
+            'dcterms:alternative' => ['tag' => '200', 'repeatable' => false, 'subfield' => 'd', 'repeatable_subfield' => true],
+            'dcterms:format' => ['tag' => '215', 'repeatable' => true, 'subfield' => 'a', 'repeatable_subfield' => true],
+            'dcterms:description' => ['tag' => '300', 'repeatable' => true, 'subfield' => 'a', 'repeatable_subfield' => false],
+            'dcterms:provenance' => ['tag' => '317', 'repeatable' => true, 'subfield' => 'a', 'repeatable_subfield' => false],
+            'dcterms:abstract' => ['tag' => '330', 'repeatable' => true, 'subfield' => 'a', 'repeatable_subfield' => false],
+            'foaf:primaryTopic' => ['tag' => '600', 'repeatable' => true, 'subfield' => 'a', 'repeatable_subfield' => false],
+            'foaf:theme' => ['tag' => '604', 'repeatable' => true, 'subfield' => 'a', 'repeatable_subfield' => false],
+            'dcterms:subject' => ['tag' => '610', 'repeatable' => true, 'subfield' => 'a', 'repeatable_subfield' => true],
+            'foaf:topic' => ['tag' => '615', 'repeatable' => true, 'subfield' => 'a', 'repeatable_subfield' => false],
+            'dcterms:spatial' => ['tag' => '660', 'repeatable' => true, 'subfield' => 'a', 'repeatable_subfield' => false],
+            'dcterms:temporal' => ['tag' => '661', 'repeatable' => true, 'subfield' => 'a', 'repeatable_subfield' => false],
+            'dcterms:creator' => ['tag' => '700', 'repeatable' => false, 'subfield' => 'a', 'repeatable_subfield' => false],
+            'dcterms:contributor' => ['tag' => '702', 'repeatable' => true, 'subfield' => 'g', 'repeatable_subfield' => false],
+            'koha:biblionumber' => ['tag' => '035', 'repeatable' => true, 'subfield' => 'a', 'repeatable_subfield' => false],
+            'dcterms:relation' => ['tag' => '856', 'repeatable' => true, 'subfield' => 'a', 'repeatable_subfield' => true],
+            'dcterms:instructionalMethod' => ['tag' => '901', 'repeatable' => true, 'subfield' => 'a', 'repeatable_subfield' => true],
+            'dcterms:rights' => ['tag' => '371', 'repeatable' => true, 'subfield' => 'a', 'repeatable_subfield' => false],
+            'dcterms:rightsHolder' => ['tag' => '371', 'repeatable' => true, 'subfield' => 'b', 'repeatable_subfield' => false],
+        ];
+
+        if ($resourceType === 'o:ItemSet') {
+            $metadatasMapping['dcterms:resume'] = ['tag' => '300', 'repeatable' => true, 'subfield' => 'a', 'repeatable_subfield' => false];
+            $metadatasMapping['dcterms:date'] = ['tag' => '214', 'repeatable' => true, 'subfield' => 'd', 'repeatable_subfield' => true];
+        }
+        if ($resourceType === 'o:Item') {
+            $metadatasMapping['dcterms:publisher'] = ['tag' => '214', 'repeatable' => true, 'subfield' => 'a', 'repeatable_subfield' => false];
+            $metadatasMapping['dcterms:issued'] = ['tag' => '214', 'repeatable' => true, 'subfield' => 'd', 'repeatable_subfield' => true];
+        }
+        if ($resourceType === 'o:Media') {
+            $metadatasMapping['dcterms:medium'] = ['tag' => '324', 'repeatable' => false, 'subfield' => 'a', 'repeatable_subfield' => false];
+            $metadatasMapping['bibo:owner'] = ['tag' => '345', 'repeatable' => false, 'subfield' => 'a', 'repeatable_subfield' => true];
+        }
+
+        return $metadatasMapping;
+    }
+
+    protected function getRepeatableFieldsMapping($resource)
+    {
+        $resourceType = $resource->getResourceJsonLdType();
+
+        if ($resourceType === 'o:Item') {
+            if ($resource->itemSets()) {
+                foreach ($resource->itemSets() as $itemSet) {
+                    $repeatableFieldsMapping['069'][] = ['a' => $itemSet->id(), 'b' => "Collection", 'c' => $itemSet->title()];
+                }
+            }
+        }
+        if ($resourceType === 'o:ItemSet') {
+            $ancestors = $this->itemSetsTreeService->getAncestors($resource);
+            if (isset($ancestors)) {
+                foreach ($ancestors as $ancestor) {
+                    $repeatableFieldsMapping['079'][] = ['a' => $ancestor->id(), 'b' => "Collection parent", 'c' => $ancestor->title()];
+                }
+            }
+        }
+
+        return $repeatableFieldsMapping;
     }
 }
