@@ -27,25 +27,23 @@ class UnimarcStandard extends AbstractMappingClass
         $this->setDom($dom);
 
         foreach ($resources as $resource) {
-            if ($resource->isPublic()) {
-                $record = $dom->createElement('record');
-                $collection->appendChild($record);
+            $record = $dom->createElement('record');
+            $collection->appendChild($record);
 
-                $resourceType = $resource->getResourceJsonLdType();
-                                
-                $fieldsMapping = $this->getFieldMapping($resource);
-                $metadatasMapping = $this->getMetadatasMapping($resourceType);
-                $repeatableFieldsMapping = $this->getRepeatableFieldsMapping($resourceType);
+            $resourceType = $resource->getResourceJsonLdType();
 
-                foreach ($fieldsMapping as $tag => $value) {
-                    $this->addElement($tag, $value, $record);
-                }
-                foreach ($repeatableFieldsMapping as $tag => $value) {
-                    $this->addRepeatableElement($tag, $value, $record);
-                }
-                foreach ($metadatasMapping as $property => $mappingDatas) {
-                    $this->addMetadataElement($resource, $property, $mappingDatas, $record);
-                }
+            $fieldsMapping = $this->getFieldMapping($resource);
+            $metadatasMapping = $this->getMetadatasMapping($resourceType);
+            $repeatableFieldsMapping = $this->getRepeatableFieldsMapping($resource);
+
+            foreach ($fieldsMapping as $tag => $value) {
+                $this->addElement($tag, $value, $record);
+            }
+            foreach ($repeatableFieldsMapping as $tag => $value) {
+                $this->addRepeatableElement($tag, $value, $record);
+            }
+            foreach ($metadatasMapping as $property => $mappingDatas) {
+                $this->addMetadataElement($resource, $property, $mappingDatas, $record);
             }
         }
         header("Content-Type: text/xml");

@@ -24,6 +24,16 @@ class ExportJob extends AbstractJob
         $resourceType = $this->getArg('resource_type');
         $classMapping = $this->getArg('class_mapping');
         $queryParams = $this->getArg('query_params');
+        $resourceVisibility = $this->getArg('resource_visibility');
+
+        if($resourceVisibility != 'all') {
+            $isPublic = $resourceVisibility == 'public' ? '1' : '0';
+            if(strlen($queryParams) > 0) {
+                $queryParams .= "&is_public=$isPublic";
+            } else {
+                $queryParams .= "is_public=$isPublic";
+            }
+        }
 
         $xmlOutput = $exporter->exportQuery($resourceType, $queryParams, $classMapping);
         $xmlOutput->formatOutput = true;
@@ -41,6 +51,7 @@ class ExportJob extends AbstractJob
             'resource_type' => $resourceType,
             'class_mapping' => $classMapping,
             'query_params' => $queryParams,
+            'resource_visibility' => $resourceVisibility,
             'o:job' => ['o:id' => $this->job->getId()],
             'file_path' => $exportPath,
             'created' => $date,

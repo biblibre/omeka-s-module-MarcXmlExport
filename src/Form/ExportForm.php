@@ -2,6 +2,7 @@
 
 namespace MarcXmlExport\Form;
 
+use Laminas\Form\Element\Checkbox;
 use Laminas\Form\Form;
 use Laminas\Form\Element\Radio;
 use Laminas\Form\Element\Select;
@@ -47,6 +48,22 @@ class ExportForm extends Form
                     'item_sets' => 'Item sets', //@translate
                     'items' => 'Items', //@translate
                     'media' => 'Medias', //@translate
+                ],
+            ],
+            'attributes' => [
+                'required' => true,
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'resource_visibility',
+            'type' => Radio::class,
+            'options' => [
+                'label' => 'Select resources visibility', //@translate
+                'value_options' => [
+                    'all' => 'All resources', //@translate
+                    'public' => 'Only public resources', //@translate
+                    'private' => 'Only private resources', //@translate
                 ],
             ],
             'attributes' => [

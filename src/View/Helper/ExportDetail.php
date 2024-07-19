@@ -28,6 +28,7 @@ class ExportDetail extends AbstractHelper
                 'name' => $export->name(),
                 'mappingName' => $export->classMapping(),
                 'resourceType' => $export->resourceType(),
+                'resourceVisibility' => $export->resourceVisibility(),
                 'query' => $query,
                 'job' => $export->job(),
                 'filePath' => $filePath,

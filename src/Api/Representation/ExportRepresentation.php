@@ -12,6 +12,7 @@ class ExportRepresentation extends AbstractEntityRepresentation
             'name' => $this->name(),
             'query_params' => $this->queryParams(),
             'resource_type' => $this->resourceType(),
+            'resource_visibility' => $this->resourceVisibility(),
             'class_mapping' => $this->classMapping(),
             'file_path' => $this->filePath(),
         ];
@@ -40,6 +41,11 @@ class ExportRepresentation extends AbstractEntityRepresentation
     public function resourceType()
     {
         return $this->resource->getResourceType();
+    }
+
+    public function resourceVisibility()
+    {
+        return $this->resource->getResourceVisibility();
     }
 
     public function classMapping()

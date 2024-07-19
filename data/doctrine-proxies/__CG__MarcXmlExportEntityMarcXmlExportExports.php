@@ -26,7 +26,7 @@ class MarcXmlExportExports extends \MarcXmlExport\Entity\MarcXmlExportExports im
     /**
      * @var boolean flag indicating if this object was already initialized
      *
-     * @see \Doctrine\Common\Persistence\Proxy::__isInitialized
+     * @see \Doctrine\Persistence\Proxy::__isInitialized
      */
     public $__isInitialized__ = false;
 
@@ -66,10 +66,10 @@ class MarcXmlExportExports extends \MarcXmlExport\Entity\MarcXmlExportExports im
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'id', 'created', 'name', 'queryParams', 'resourceType', 'classMapping', 'filePath', 'job'];
+            return ['__isInitialized__', 'id', 'created', 'name', 'queryParams', 'resourceType', 'resourceVisibility', 'classMapping', 'filePath', 'job'];
         }
 
-        return ['__isInitialized__', 'id', 'created', 'name', 'queryParams', 'resourceType', 'classMapping', 'filePath', 'job'];
+        return ['__isInitialized__', 'id', 'created', 'name', 'queryParams', 'resourceType', 'resourceVisibility', 'classMapping', 'filePath', 'job'];
     }
 
     /**
@@ -282,6 +282,28 @@ class MarcXmlExportExports extends \MarcXmlExport\Entity\MarcXmlExportExports im
     /**
      * {@inheritDoc}
      */
+    public function getResourceVisibility()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getResourceVisibility', []);
+
+        return parent::getResourceVisibility();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setResourceVisibility($resourceVisibility)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setResourceVisibility', [$resourceVisibility]);
+
+        return parent::setResourceVisibility($resourceVisibility);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getClassMapping()
     {
 
@@ -343,17 +365,6 @@ class MarcXmlExportExports extends \MarcXmlExport\Entity\MarcXmlExportExports im
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setFilePath', [$filePath]);
 
         return parent::setFilePath($filePath);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function prePersist(\Doctrine\ORM\Event\LifecycleEventArgs $eventArgs)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'prePersist', [$eventArgs]);
-
-        return parent::prePersist($eventArgs);
     }
 
     /**

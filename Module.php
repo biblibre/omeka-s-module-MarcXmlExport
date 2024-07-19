@@ -31,6 +31,7 @@ namespace MarcXmlExport;
 
 use Omeka\Module\AbstractModule;
 use Laminas\ServiceManager\ServiceLocatorInterface;
+use Composer\Semver\Comparator;
 
 class Module extends AbstractModule
 {
@@ -43,7 +44,7 @@ class Module extends AbstractModule
     {
         $connection = $serviceLocator->get('Omeka\Connection');
         $sql = <<<'SQL'
-        CREATE TABLE marc_xml_export_exports (id INT AUTO_INCREMENT NOT NULL, job_id INT NOT NULL, created DATETIME NOT NULL, name VARCHAR(255) NOT NULL, query_params VARCHAR(255) DEFAULT NULL, resource_type VARCHAR(255) NOT NULL, class_mapping VARCHAR(255) NOT NULL, file_path VARCHAR(255) NOT NULL, UNIQUE INDEX UNIQ_BCD99CFD5E237E06 (name), UNIQUE INDEX UNIQ_BCD99CFDBE04EA9 (job_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB;
+        CREATE TABLE marc_xml_export_exports (id INT AUTO_INCREMENT NOT NULL, job_id INT NOT NULL, created DATETIME NOT NULL, name VARCHAR(255) NOT NULL, query_params VARCHAR(255) DEFAULT NULL, resource_type VARCHAR(255) NOT NULL, resource_visibility VARCHAR(255) NOT NULL, class_mapping VARCHAR(255) NOT NULL, file_path VARCHAR(255) NOT NULL, UNIQUE INDEX UNIQ_BCD99CFD5E237E06 (name), UNIQUE INDEX UNIQ_BCD99CFDBE04EA9 (job_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB;
         ALTER TABLE marc_xml_export_exports ADD CONSTRAINT FK_BCD99CFDBE04EA9 FOREIGN KEY (job_id) REFERENCES job (id);
 
         SQL;
@@ -64,6 +65,15 @@ class Module extends AbstractModule
 
         $sqls = array_filter(array_map('trim', explode(';', $sql)));
         foreach ($sqls as $sql) {
+            $connection->exec($sql);
+        }
+    }
+
+    public function upgrade($oldVersion, $newVersion, ServiceLocatorInterface $serviceLocator)
+    {
+        $connection = $serviceLocator->get('Omeka\Connection');
+        if (Comparator::lessThan($oldVersion, '0.2.0')) { 
+            $sql = "ALTER TABLE `marc_xml_export_exports` ADD COLUMN resource_visibility VARCHAR(255) NOT NULL";
             $connection->exec($sql);
         }
     }

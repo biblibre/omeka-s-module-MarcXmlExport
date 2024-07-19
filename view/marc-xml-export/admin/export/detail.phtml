@@ -15,6 +15,9 @@ $escape = $this->plugin('escapeHtml');?>
         <?php echo $this->translate($resourceType);?>
     </td>
     <td>
+    <?php echo $this->translate($resourceVisibility);?>
+    </td>
+    <td>
         <?php echo $this->hyperlink('', $query, ['class' => 'o-icon-external', 'target' => '_blank']); ?>
     </td>
     <td>

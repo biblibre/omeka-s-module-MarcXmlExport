@@ -42,6 +42,12 @@ class MarcXmlExportExports extends AbstractEntity
      * @Column(type="string")
      * @JoinColumn(nullable=false)
      */
+    protected $resourceVisibility;
+
+    /**
+     * @Column(type="string")
+     * @JoinColumn(nullable=false)
+     */
     protected $classMapping;
 
     /**
@@ -103,6 +109,18 @@ class MarcXmlExportExports extends AbstractEntity
     public function setResourceType($resourceType)
     {
         $this->resourceType = $resourceType;
+
+        return $this;
+    }
+
+    public function getResourceVisibility()
+    {
+        return $this->resourceVisibility;
+    }
+
+    public function setResourceVisibility($resourceVisibility)
+    {
+        $this->resourceVisibility = $resourceVisibility;
 
         return $this;
     }

@@ -53,6 +53,10 @@ class ExportAdapter extends AbstractEntityAdapter
             $entity->setResourceType($data['resource_type']);
         }
 
+        if (isset($data['resource_visibility'])) {
+            $entity->setResourceVisibility($data['resource_visibility']);
+        }
+
         if (isset($data['class_mapping'])) {
             $entity->setClassMapping($data['class_mapping']);
         }
