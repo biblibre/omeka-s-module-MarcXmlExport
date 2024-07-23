@@ -74,53 +74,64 @@ class UnimarcStandard extends AbstractMappingClass
             $field = $this->getFieldByTag($mappingDatas['tag'], $parentNode);
             if (is_array($values)) {
                 foreach ($values as $value) {
-                    $subfield = $dom->createElement('subfield', $this->trimAndEscape($value));
-                    $subfield->setAttribute('code', $code);
-                    $field->appendChild($subfield);
+                    if ($value->isPublic()) {
+                        $valueType = explode(':', $value->type())[0];
+                        switch ($valueType) {
+                            case 'resource':
+                                $field = $this->addResourceValue($dom, $field, $value);
+                                break;
 
-                    if (explode(':', $value->type())[0] === 'valuesuggest') {
-                        $extraMapping = $this->prepareValueSuggestValues($value);
-                        foreach ($extraMapping as $code => $value) {
-                            if (strlen($value) > 0) {
-                                $extraSubfield = $dom->createElement('subfield', $this->trimAndEscape($value));
-                                $extraSubfield->setAttribute('code', $code);
-                                $field->appendChild($extraSubfield);
-                            }
+                            case 'valuesuggest':
+                                $field = $this->addValueSuggestValue($dom, $field, $value);
+                                break;
+
+                            case 'uri':
+                                $field = $this->addUriValue($dom, $field, $value);
+                                break;
+
+                            default:
+                                $field = $this->addLiteralValue($dom, $field, $code, $value);
+                                break;
+                        }
+
+                        if ($repeatableField && $field) {
+                            $parentNode->appendChild($field);
                         }
                     }
 
-                    if ($repeatableField) {
+                    if (!$repeatableField && $field) {
                         $parentNode->appendChild($field);
                     }
                 }
-
-                if (! $repeatableField) {
-                    $parentNode->appendChild($field);
-                }
             } else {
                 $value = $values;
-                $subfield = $dom->createElement('subfield', $this->trimAndEscape($value));
-                $subfield->setAttribute('code', $code);
+                if ($value->isPublic()) {
+                    $valueType = explode(':', $value->type())[0];
+                    switch ($valueType) {
+                        case 'resource':
+                            $field = $this->addResourceValue($dom, $field, $value);
+                            break;
 
-                $field->appendChild($subfield);
+                        case 'valuesuggest':
+                            $field = $this->addValueSuggestValue($dom, $field, $value);
+                            break;
 
-                if (explode(':', $value->type())[0] === 'valuesuggest') {
-                    $extraMapping = $this->prepareValueSuggestValues($value);
-                    foreach ($extraMapping as $code => $value) {
-                        if (strlen($value) > 0) {
-                            $extraSubfield = $dom->createElement('subfield', $this->trimAndEscape($value));
-                            $extraSubfield->setAttribute('code', $code);
-                            $field->appendChild($extraSubfield);
-                        }
+                        case 'uri':
+                            $field = $this->addUriValue($dom, $field, $value);
+                            break;
+
+                        default:
+                            $field = $this->addLiteralValue($dom, $field, $code, $value);
+                            break;
                     }
-                }
 
-                if ($repeatableField) {
-                    $parentNode->appendChild($field);
-                }
+                    if ($repeatableField && $field) {
+                        $parentNode->appendChild($field);
+                    }
 
-                if (! $repeatableField) {
-                    $parentNode->appendChild($field);
+                    if (!$repeatableField && $field) {
+                        $parentNode->appendChild($field);
+                    }
                 }
             }
         }
@@ -162,30 +173,6 @@ class UnimarcStandard extends AbstractMappingClass
                 $parentNode->appendChild($field);
             }
         }
-    }
-
-    protected function prepareValueSuggestValues($value)
-    {
-        $valueArray = $value->jsonSerialize();
-        $extraMapping = [];
-
-        $extraMapping['0'] = end(explode('/', $valueArray['@id']));
-        $label = $valueArray['o:label'];
-
-        if ($value->type() === 'valuesuggest:idref:person') {
-            $extraMapping['a'] = explode(',', $label)[0];
-            if (strpos($value, '(')) {
-                $extraMapping['b'] = $this->getStringBetween($label, ',', '(');
-                $extraMapping['d'] = $this->getStringBetween($label, '(', ')');
-            } else {
-                $extraMapping['b'] = explode(',', $label)[1];
-            }
-        } else {
-            $extraMapping['a'] = $label;
-            $extraMapping['u'] = $valueArray['@id'];
-        }
-
-        return $extraMapping;
     }
 
     protected function getDom()
@@ -255,7 +242,7 @@ class UnimarcStandard extends AbstractMappingClass
             '001' => $resource->id(),
             '099' => ['c' => $resource->created()->format('Y-m-d'), 'd' => $resource->modified()->format('Y-m-d')],
             '299' => ['a' => "OMEKAS", 'b' => $resourceTypeValues[$resourceType]],
-            '956' => ['u' => $resource->thumbnailDisplayUrl('medium')],
+            '956' => ['u' => $resource->thumbnailDisplayUrl('large')],
             '995' => ['a' => 'Bibliothèque numérique', 'b' => 'Bibliothèque numérique', 'f' => 'omekas-' . $resource->id(), 'r' => 'lz'],
         ];
 
@@ -295,7 +282,6 @@ class UnimarcStandard extends AbstractMappingClass
             'dcterms:temporal' => ['tag' => '661', 'repeatable' => true, 'subfield' => 'a', 'repeatable_subfield' => false],
             'dcterms:creator' => ['tag' => '700', 'repeatable' => false, 'subfield' => 'a', 'repeatable_subfield' => false],
             'dcterms:contributor' => ['tag' => '702', 'repeatable' => true, 'subfield' => 'g', 'repeatable_subfield' => false],
-            'koha:biblionumber' => ['tag' => '035', 'repeatable' => true, 'subfield' => 'a', 'repeatable_subfield' => false],
             'dcterms:relation' => ['tag' => '856', 'repeatable' => true, 'subfield' => 'a', 'repeatable_subfield' => true],
             'dcterms:instructionalMethod' => ['tag' => '901', 'repeatable' => true, 'subfield' => 'a', 'repeatable_subfield' => true],
             'dcterms:rights' => ['tag' => '371', 'repeatable' => true, 'subfield' => 'a', 'repeatable_subfield' => false],
@@ -339,5 +325,103 @@ class UnimarcStandard extends AbstractMappingClass
         }
 
         return $repeatableFieldsMapping;
+    }
+
+    protected function addLiteralValue($dom, $field, $code, $value)
+    {
+        $subfield = $dom->createElement('subfield', $this->trimAndEscape($value));
+        $subfield->setAttribute('code', $code);
+        $field->appendChild($subfield);
+
+        return $field;
+    }
+
+    protected function addResourceValue($dom, $field, $value)
+    {
+        $resource = $value->valueResource();
+        $resourceController = $resource->getControllerName();
+
+        $subfield = $dom->createElement('subfield', $this->trimAndEscape($resource->displayTitle()));
+        $subfield->setAttribute('code', 'a');
+        $field->appendChild($subfield);
+
+        switch ($resourceController) {
+            case 'item-set':
+                $subfieldValue = $resource->id();
+                $code = '2';
+                break;
+
+            case 'item':
+                $subfieldValue = $resource->id();
+                $code = '1';
+                break;
+
+            case 'media':
+                $subfieldValue = $resource->id();
+                $code = '3';
+                break;
+
+            case 'taxonomy':
+                $subfieldValue = $resource->code();
+                $code = '1';
+                break;
+        }
+
+        if (!$code) {
+            return null;
+        }
+
+        $subfield = $dom->createElement('subfield', $this->trimAndEscape($subfieldValue));
+        $subfield->setAttribute('code', $code);
+        $field->appendChild($subfield);
+
+        return $field;
+    }
+
+    protected function addValueSuggestValue($dom, $field, $value)
+    {
+        $valueArray = $value->jsonSerialize();
+        $valueSuggestMapping = [];
+
+        $valueSuggestMapping['3'] = end(explode('/', $valueArray['@id']));
+        $label = $valueArray['o:label'];
+
+        if ($value->type() === 'valuesuggest:idref:person') {
+            $valueSuggestMapping['a'] = explode(',', $label)[0];
+            if (strpos($value, '(')) {
+                $valueSuggestMapping['b'] = $this->getStringBetween($label, ',', '(');
+                $valueSuggestMapping['d'] = $this->getStringBetween($label, '(', ')');
+            } else {
+                $valueSuggestMapping['b'] = explode(',', $label)[1];
+            }
+            $valueSuggestMapping['2'] = 'idref:person';
+        } else {
+            $valueSuggestMapping['a'] = $label;
+            $valueSuggestMapping['u'] = $valueArray['@id'];
+            $valueSuggestMapping['2'] = explode(':', $value->type(), 2)[1];
+        }
+
+        foreach ($valueSuggestMapping as $code => $valueSuggestValue) {
+            if (strlen($valueSuggestValue) > 0) {
+                $subfield = $dom->createElement('subfield', $this->trimAndEscape($valueSuggestValue));
+                $subfield->setAttribute('code', $code);
+                $field->appendChild($subfield);
+            }
+        }
+
+        return $field;
+    }
+
+    protected function addUriValue($dom, $field, $value)
+    {
+        $subfieldUri = $dom->createElement('subfield', $this->trimAndEscape($value->uri()));
+        $subfieldUri->setAttribute('code', 'u');
+        $field->appendChild($subfieldUri);
+
+        $subfieldValue = $dom->createElement('subfield', $this->trimAndEscape($value->value()));
+        $subfieldValue->setAttribute('code', 'z');
+        $field->appendChild($subfieldValue);
+
+        return $field;
     }
 }

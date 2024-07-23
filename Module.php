@@ -72,7 +72,7 @@ class Module extends AbstractModule
     public function upgrade($oldVersion, $newVersion, ServiceLocatorInterface $serviceLocator)
     {
         $connection = $serviceLocator->get('Omeka\Connection');
-        if (Comparator::lessThan($oldVersion, '0.2.0')) { 
+        if (Comparator::lessThan($oldVersion, '0.2.0')) {
             $sql = "ALTER TABLE `marc_xml_export_exports` ADD COLUMN resource_visibility VARCHAR(255) NOT NULL";
             $connection->exec($sql);
         }

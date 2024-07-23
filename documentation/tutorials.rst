@@ -9,6 +9,7 @@ To create a new export, simply submit the form, indicating :
 "The name of the export"
 "The mapping to be used"
 "Resource type"
+"Resources visibility"
 
 .. image:: images/MarcXMLExport_new-sidebar-sample.png
 

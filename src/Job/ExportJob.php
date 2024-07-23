@@ -26,9 +26,9 @@ class ExportJob extends AbstractJob
         $queryParams = $this->getArg('query_params');
         $resourceVisibility = $this->getArg('resource_visibility');
 
-        if($resourceVisibility != 'all') {
+        if ($resourceVisibility != 'all') {
             $isPublic = $resourceVisibility == 'public' ? '1' : '0';
-            if(strlen($queryParams) > 0) {
+            if (strlen($queryParams) > 0) {
                 $queryParams .= "&is_public=$isPublic";
             } else {
                 $queryParams .= "is_public=$isPublic";
