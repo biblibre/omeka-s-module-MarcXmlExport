@@ -268,7 +268,7 @@ class UnimarcStandard extends AbstractMappingClass
             '995' => ['a' => 'Bibliothèque numérique', 'b' => 'Bibliothèque numérique', 'f' => 'omekas-' . $resource->id(), 'r' => 'lz'],
         ];
 
-        if ($resourceType === 'o:ItemSet') {
+        if ($resourceType === 'o:ItemSet' && $this->itemSetsTreeService) {
             $ancestors = $this->itemSetsTreeService->getAncestors($resource);
             if (isset($ancestors)) {
                 foreach ($ancestors as $ancestor) {
@@ -337,7 +337,7 @@ class UnimarcStandard extends AbstractMappingClass
                 }
             }
         }
-        if ($resourceType === 'o:ItemSet') {
+        if ($resourceType === 'o:ItemSet' && $this->itemSetsTreeService) {
             $ancestors = $this->itemSetsTreeService->getAncestors($resource);
             if (isset($ancestors)) {
                 foreach ($ancestors as $ancestor) {

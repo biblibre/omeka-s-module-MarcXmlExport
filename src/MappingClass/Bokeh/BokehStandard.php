@@ -4,20 +4,23 @@ namespace MarcXmlExport\MappingClass\Bokeh;
 
 use DOMDocument;
 use MarcXmlExport\MappingClass\Unimarc\UnimarcStandard;
+use Omeka\Module\Manager as ModuleManager;
 
 class BokehStandard extends UnimarcStandard
 {
     protected $logger;
     protected $api;
     protected $itemSetsTreeService;
+    protected $moduleManager;
     protected $dom;
     protected $propertiesVisibility = 'only_public';
 
-    public function __construct($logger, $itemSetsTreeService, $api)
+    public function __construct($logger, $itemSetsTreeService, $api, $moduleManager)
     {
         $this->logger = $logger;
         $this->api = $api;
         $this->itemSetsTreeService = $itemSetsTreeService;
+        $this->moduleManager = $moduleManager;
     }
 
     public function getLabel()
@@ -104,7 +107,9 @@ class BokehStandard extends UnimarcStandard
         $repeatableFieldsMapping = [];
         $repeatableFieldsMapping = $this->addItemSetsMap($repeatableFieldsMapping, $resource);
         $repeatableFieldsMapping = $this->addSitesMap($repeatableFieldsMapping, $resource);
-        $repeatableFieldsMapping = $this->addGroupsMap($repeatableFieldsMapping, $resource);
+        if($this->isGroupModuleActive()) {
+            $repeatableFieldsMapping = $this->addGroupsMap($repeatableFieldsMapping, $resource);
+        }
 
         return $repeatableFieldsMapping;
     }
@@ -163,7 +168,7 @@ class BokehStandard extends UnimarcStandard
     {
         $resourceType = $resource->getResourceJsonLdType();
 
-        if ($resourceType === 'o:ItemSet') {
+        if ($resourceType === 'o:ItemSet' && $this->itemSetsTreeService) {
             $ancestors = $this->itemSetsTreeService->getAncestors($resource);
             if (isset($ancestors)) {
                 foreach ($ancestors as $ancestor) {
@@ -188,4 +193,12 @@ class BokehStandard extends UnimarcStandard
         }
         return $mapping;
     }
+
+    protected function isGroupModuleActive()
+    {
+        $groupModule = $this->moduleManager->getModule("Group");
+
+        return $groupModule && $groupModule->getState() === ModuleManager::STATE_ACTIVE;
+    }
+
 }
