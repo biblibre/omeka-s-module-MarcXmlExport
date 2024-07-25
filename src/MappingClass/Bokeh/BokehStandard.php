@@ -4,23 +4,21 @@ namespace MarcXmlExport\MappingClass\Bokeh;
 
 use DOMDocument;
 use MarcXmlExport\MappingClass\Unimarc\UnimarcStandard;
-use Omeka\Module\Manager as ModuleManager;
 
 class BokehStandard extends UnimarcStandard
 {
     protected $logger;
     protected $api;
     protected $itemSetsTreeService;
-    protected $moduleManager;
-    protected $dom;
+    protected $groupModuleIsActive;
     protected $propertiesVisibility = 'only_public';
 
-    public function __construct($logger, $itemSetsTreeService, $api, $moduleManager)
+    public function __construct($logger, $itemSetsTreeService, $api, $groupModuleIsActive)
     {
         $this->logger = $logger;
         $this->api = $api;
         $this->itemSetsTreeService = $itemSetsTreeService;
-        $this->moduleManager = $moduleManager;
+        $this->groupModuleIsActive = $groupModuleIsActive;
     }
 
     public function getLabel()
@@ -41,7 +39,7 @@ class BokehStandard extends UnimarcStandard
             $record = $dom->createElement('record');
             $collection->appendChild($record);
 
-            $fieldsMapping = $this->getFieldMapping($resource);
+            $fieldsMapping = $this->getFieldsMapping($resource);
             $repeatableFieldsMapping = $this->getRepeatableFieldsMapping($resource);
 
             foreach ($fieldsMapping as $tag => $value) {
@@ -61,7 +59,7 @@ class BokehStandard extends UnimarcStandard
         return $dom;
     }
 
-    protected function getFieldMapping($resource)
+    protected function getFieldsMapping($resource)
     {
         $resourceType = $resource->getResourceJsonLdType();
         $resourceTypeValues = [
@@ -76,7 +74,7 @@ class BokehStandard extends UnimarcStandard
                 'c' => $resource->created()->format('Y-m-d'),
                 'd' => $resource->modified()->format('Y-m-d'),
                 'o' => $resource->isPublic(),
-                'y' => $resource->owner()->name(),
+                'y' => $resource->owner() ? $resource->owner()->name() : NULL,
             ],
             '299' => [
                 'a' => "OMEKAS",
@@ -102,12 +100,13 @@ class BokehStandard extends UnimarcStandard
         }
         return $fieldsMapping;
     }
+
     protected function getRepeatableFieldsMapping($resource)
     {
         $repeatableFieldsMapping = [];
         $repeatableFieldsMapping = $this->addItemSetsMap($repeatableFieldsMapping, $resource);
         $repeatableFieldsMapping = $this->addSitesMap($repeatableFieldsMapping, $resource);
-        if($this->isGroupModuleActive()) {
+        if ($this->groupModuleIsActive) {
             $repeatableFieldsMapping = $this->addGroupsMap($repeatableFieldsMapping, $resource);
         }
 
@@ -122,6 +121,7 @@ class BokehStandard extends UnimarcStandard
                 'b' => $resource->resourceTemplate()->label(),
             ];
         }
+        return $mapping;
     }
     protected function addResourceClassMap($mapping, $resource)
     {
@@ -194,11 +194,153 @@ class BokehStandard extends UnimarcStandard
         return $mapping;
     }
 
-    protected function isGroupModuleActive()
+    protected function addRepeatableElement($tag, $value, $parentNode)
     {
-        $groupModule = $this->moduleManager->getModule("Group");
-
-        return $groupModule && $groupModule->getState() === ModuleManager::STATE_ACTIVE;
+        $dom = $this->getDom();
+        foreach ($value as $subfieldValues) {
+            $field = $dom->createElement('datafield');
+            $field->setAttribute('tag', $tag);
+            foreach ($subfieldValues as $subfieldChildKey => $subfieldChildValue) {
+                $subfield = $dom->createElement('subfield', $this->trimAndEscape($subfieldChildValue));
+                $subfield->setAttribute('code', $subfieldChildKey);
+                $field->appendChild($subfield);
+            }
+            $parentNode->appendChild($field);
+        }
     }
 
+    protected function processMapping($values, $mappingDatas, $parentNode)
+    {
+        $dom = $this->getDom();
+        $repeatableField = $mappingDatas['repeatable'];
+        $code = $mappingDatas['subfield'];
+        $tag = $mappingDatas['tag'];
+        $transformation = $mappingDatas['transformation'];
+
+        if (! empty($values)) {
+            $field = $this->getFieldByTag($tag, $parentNode);
+            if (is_array($values)) {
+                foreach ($values as $value) {
+                    if ($this->isPropertyToExport($value)) {
+                        if ($transformation) {
+                            if ($transformation['type'] == 'prefix') {
+                                $transformedValue = $transformation['value'] . $value;
+                            }
+                            if ($transformation['type'] == 'suffix') {
+                                $transformedValue .= $transformation['value'];
+                            }
+                        }
+                        $valueType = explode(':', $value->type())[0];
+                        switch ($valueType) {
+                            case 'resource':
+                                $field = $this->addResourceValue($dom, $field, $value);
+                                break;
+
+                            case 'valuesuggest':
+                                $field = $this->addValueSuggestValue($dom, $field, $value);
+                                break;
+
+                            case 'uri':
+                                $field = $this->addUriValue($dom, $field, $value);
+                                break;
+
+                            default:
+                                $value = isset($transformedValue) ? $transformedValue : $value;
+                                $field = $this->addLiteralValue($dom, $field, $code, $value);
+                                break;
+                        }
+
+                        if ($repeatableField && $field) {
+                            $parentNode->appendChild($field);
+                        }
+
+                        if (!$repeatableField && $field) {
+                            $parentNode->appendChild($field);
+                        }
+                    }
+                }
+            } else {
+                $value = $values;
+                if ($this->isPropertyToExport($value)) {
+                    if ($transformation) {
+                        if ($transformation['type'] == 'prefix') {
+                            $transformedValue = $transformation['value'] . $value;
+                        }
+                        if ($transformation['type'] == 'suffix') {
+                            $transformedValue .= $transformation['value'];
+                        }
+                    }
+                    $valueType = explode(':', $value->type())[0];
+                    switch ($valueType) {
+                        case 'resource':
+                            $field = $this->addResourceValue($dom, $field, $value);
+                            break;
+
+                        case 'valuesuggest':
+                            $field = $this->addValueSuggestValue($dom, $field, $value);
+                            break;
+
+                        case 'uri':
+                            $field = $this->addUriValue($dom, $field, $value);
+                            break;
+
+                        default:
+                            $value = isset($transformedValue) ? $transformedValue : $value;
+                            $field = $this->addLiteralValue($dom, $field, $code, $value);
+                            break;
+                    }
+
+                    if ($repeatableField && $field) {
+                        $parentNode->appendChild($field);
+                    }
+
+                    if (!$repeatableField && $field) {
+                        $parentNode->appendChild($field);
+                    }
+                }
+            }
+        }
+    }
+
+    protected function addResourceValue($dom, $field, $value)
+    {
+        $resource = $value->valueResource();
+        $resourceController = $resource->getControllerName();
+
+        $subfield = $dom->createElement('subfield', $this->trimAndEscape($resource->displayTitle()));
+        $subfield->setAttribute('code', 'a');
+        $field->appendChild($subfield);
+
+        switch ($resourceController) {
+            case 'item-set':
+                $subfieldValue = $resource->id();
+                $code = '2';
+                break;
+
+            case 'item':
+                $subfieldValue = $resource->id();
+                $code = '1';
+                break;
+
+            case 'media':
+                $subfieldValue = $resource->id();
+                $code = '3';
+                break;
+
+            case 'taxonomy':
+                $subfieldValue = $resource->code();
+                $code = '1';
+                break;
+        }
+
+        if (!$code) {
+            return null;
+        }
+
+        $subfield = $dom->createElement('subfield', $this->trimAndEscape($subfieldValue));
+        $subfield->setAttribute('code', $code);
+        $field->appendChild($subfield);
+
+        return $field;
+    }
 }
