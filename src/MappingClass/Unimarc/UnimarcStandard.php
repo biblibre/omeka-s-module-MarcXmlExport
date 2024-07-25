@@ -10,6 +10,7 @@ class UnimarcStandard extends AbstractMappingClass
     protected $logger;
     protected $itemSetsTreeService;
     protected $dom;
+    protected $propertiesVisibility = 'only_public';
 
     public function __construct($logger, $itemSetsTreeService)
     {
@@ -64,6 +65,7 @@ class UnimarcStandard extends AbstractMappingClass
         $repeatableSubfields = $mappingDatas['repeatable_subfield'];
         $code = $mappingDatas['subfield'];
 
+        //todo ispublic variable
         if (($repeatableField) || ($repeatableSubfields)) {
             $values = $resource->value($property, ['all' => true]);
         } else {
@@ -74,7 +76,16 @@ class UnimarcStandard extends AbstractMappingClass
             $field = $this->getFieldByTag($mappingDatas['tag'], $parentNode);
             if (is_array($values)) {
                 foreach ($values as $value) {
-                    if ($value->isPublic()) {
+                    if ($this->isPropertyToExport($value)) {
+                        if ($mappingDatas['transformation']) {
+                            $transformation = $mappingDatas['transformation'];
+                            if ($transformation['type'] == 'prefix') {
+                                $transformedValue = $transformation['value'] . $value;
+                            }
+                            if ($transformation['type'] == 'suffix') {
+                                $transformedValue .= $transformation['value'];
+                            }
+                        }
                         $valueType = explode(':', $value->type())[0];
                         switch ($valueType) {
                             case 'resource':
@@ -90,6 +101,7 @@ class UnimarcStandard extends AbstractMappingClass
                                 break;
 
                             default:
+                                $value = isset($transformedValue) ? $transformedValue : $value;
                                 $field = $this->addLiteralValue($dom, $field, $code, $value);
                                 break;
                         }
@@ -105,7 +117,16 @@ class UnimarcStandard extends AbstractMappingClass
                 }
             } else {
                 $value = $values;
-                if ($value->isPublic()) {
+                if ($this->isPropertyToExport($value)) {
+                    if ($mappingDatas['transformation']) {
+                        $transformation = $mappingDatas['transformation'];
+                        if ($transformation['type'] == 'prefix') {
+                            $transformedValue = $transformation['value'] . $value;
+                        }
+                        if ($transformation['type'] == 'suffix') {
+                            $transformedValue .= $transformation['value'];
+                        }
+                    }
                     $valueType = explode(':', $value->type())[0];
                     switch ($valueType) {
                         case 'resource':
@@ -121,6 +142,7 @@ class UnimarcStandard extends AbstractMappingClass
                             break;
 
                         default:
+                            $value = isset($transformedValue) ? $transformedValue : $value;
                             $field = $this->addLiteralValue($dom, $field, $code, $value);
                             break;
                     }
@@ -423,5 +445,15 @@ class UnimarcStandard extends AbstractMappingClass
         $field->appendChild($subfieldValue);
 
         return $field;
+    }
+
+    protected function isPropertyToExport($value)
+    {
+        if ($this->propertiesVisibility == 'all') {
+            return true;
+        }
+        if ($this->propertiesVisibility == 'only_public') {
+            return $value->isPublic();
+        }
     }
 }

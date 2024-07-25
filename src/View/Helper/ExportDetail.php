@@ -10,7 +10,7 @@ class ExportDetail extends AbstractHelper
         $resourceTypo = [
             'item_sets' => 'item-set',
             'items' => 'item',
-            'medias' => 'media',
+            'media' => 'media',
         ];
 
         $query = $resourceTypo[$export->resourceType()];

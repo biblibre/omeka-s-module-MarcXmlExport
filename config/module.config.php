@@ -115,6 +115,7 @@ return [
     'marcxmlexport_mapping' => [
             'factories' => [
                 'unimarc_standard' => Service\UnimarcStandardMappingFactory::class,
+                'bokeh_standard' => Service\BokehStandardMappingFactory::class,
             ],
     ],
 
