@@ -16,5 +16,3 @@ To create a new export, simply submit the form, indicating :
 You will be able to filter the resources using different criteria.
 
 You can create a cron to clean up the files in the instance's export folder. See README for technical purpose.
-
-:doc:`mapping-unimarc`

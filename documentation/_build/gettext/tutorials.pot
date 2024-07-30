@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MarcXmlExport \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-20 13:28+0000\n"
+"POT-Creation-Date: 2024-07-30 10:51+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,17 +25,13 @@ msgid "Currently, product files are stored in a `~/files/Marc_XML_Export` folder
 msgstr ""
 
 #: ../../tutorials.rst:8
-msgid "To create a new export, simply submit the form, indicating : \"The name of the export\" \"The mapping to be used\" \"Resource type\""
+msgid "To create a new export, simply submit the form, indicating : \"The name of the export\" \"The mapping to be used\" \"Resource type\" \"Resources visibility\""
 msgstr ""
 
-#: ../../tutorials.rst:15
+#: ../../tutorials.rst:16
 msgid "You will be able to filter the resources using different criteria."
 msgstr ""
 
-#: ../../tutorials.rst:17
+#: ../../tutorials.rst:18
 msgid "You can create a cron to clean up the files in the instance's export folder. See README for technical purpose."
-msgstr ""
-
-#: ../../tutorials.rst:19
-msgid ":doc:`mapping-unimarc`"
 msgstr ""

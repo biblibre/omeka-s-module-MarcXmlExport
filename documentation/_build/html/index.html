@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="fr">
+<html class="writer-html5" lang="en">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Introduction &mdash; Documentation MarcXmlExport </title>
+  <title>Introduction &mdash; MarcXmlExport  documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
 
@@ -15,13 +15,12 @@
   
         <script src="_static/jquery.js?v=5d32c60e"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=3b36ad44"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=b3ba4146"></script>
         <script src="_static/doctools.js?v=888ff710"></script>
         <script src="_static/sphinx_highlight.js?v=4825356b"></script>
-        <script src="_static/translations.js?v=d99ca74e"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Recherche" href="search.html" />
+    <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Configuration" href="configuration.html" /> 
 </head>
 
@@ -38,17 +37,17 @@
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Rechercher docs" aria-label="Rechercher docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contenus</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="features.html">Fonctionnalités</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutoriels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="features.html">Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
 </ul>
 
         </div>
@@ -67,7 +66,7 @@
       <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
       <li class="breadcrumb-item active">Introduction</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/index.rst.txt" rel="nofollow"> Afficher la source de la page</a>
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -76,32 +75,33 @@
            <div itemprop="articleBody">
              
   <section id="introduction">
-<h1>Introduction<a class="headerlink" href="#introduction" title="Lien permanent vers cette rubrique"></a></h1>
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading"></a></h1>
 <section id="how-does-it-work">
-<h2>Comment cela fonctionne ?<a class="headerlink" href="#how-does-it-work" title="Lien permanent vers cette rubrique"></a></h2>
-<p>Ce module produit et exporte des fichiers au format marcxml depuis des ressources et un profil de correspondances sélectionnés.</p>
+<h2>How does it work ?<a class="headerlink" href="#how-does-it-work" title="Permalink to this heading"></a></h2>
+<p>This module produces and exports files in marcxml format from selected resources according to a defined mapping.</p>
 </section>
 <section id="requirements">
-<h2>Requis<a class="headerlink" href="#requirements" title="Lien permanent vers cette rubrique"></a></h2>
-<p>Le chemin des fichiers exportés est actuellement codé en dur dans le module, il est donc nécessaire de créer un dossier:</p>
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this heading"></a></h2>
+<p>The export path is currently hard-coded, so it is necessary to create a directory:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>OMEKAS_DIR<span class="se">\f</span>iles<span class="se">\M</span>arc_XML_Export
 </pre></div>
 </div>
 </section>
 <section id="where-is-the-configuration">
-<h2>Où est la configuration ?<a class="headerlink" href="#where-is-the-configuration" title="Lien permanent vers cette rubrique"></a></h2>
-<p>Actuellement le profil de correspondances <cite>Unimarc</cite> est intégré au module. Mais vous pouvez ajouter le votre en modifiant le fichier <cite>module.config.php</cite> (Voir aussi <a class="reference internal" href="configuration.html"><span class="doc">Configuration</span></a>). Il sera ensuite disponible dans le menu déroulant lors de la création d’un export.</p>
-<p>Plus d’informations concernant le profil <cite>Unimarc</cite>: <a class="reference internal" href="mapping-unimarc.html"><span class="doc">Profil Unimarc (français)</span></a></p>
+<h2>Where is the configuration<a class="headerlink" href="#where-is-the-configuration" title="Permalink to this heading"></a></h2>
+<p>Actually <cite>Unimarc</cite> mapping is include in this module but you can add your own custom mapping on <cite>module.config.php</cite> file. (Also see <a class="reference internal" href="configuration.html"><span class="doc">Configuration</span></a>)
+It will then be accessible when the export is created under “Select class mapping” dropdown</p>
+<p>A specific mapping purposal is include too for <cite>Bokeh</cite> app exchange.</p>
 <div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">Contenus</span></p>
+<p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#add-your-custom-mapping">Ajoutez votre profil de correspondances personnalisé</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configuration.html#cron-clean-up">Nettoyage récurrent par cronjob</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#add-your-custom-mapping">Add your custom mapping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration.html#cron-clean-up">Cron clean-up</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="features.html">Fonctionnalités</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutoriels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="features.html">Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
 </ul>
 </div>
 </section>
@@ -110,8 +110,8 @@
 
            </div>
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pied de page">
-        <a href="configuration.html" class="btn btn-neutral float-right" title="Configuration" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="configuration.html" class="btn btn-neutral float-right" title="Configuration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
@@ -120,9 +120,9 @@
     <p>&#169; Copyright 2023, BibLibre.</p>
   </div>
 
-  Compilé avec <a href="https://www.sphinx-doc.org/">Sphinx</a> en utilisant un
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">thème</a>
-    fourni par <a href="https://readthedocs.org">Read the Docs</a>.
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
    
 
 </footer>

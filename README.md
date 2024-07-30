@@ -10,7 +10,7 @@ This module export a set of selected resources in a marcxml file which can be ea
 
 ## Requirements
 
-* Omeka S >= 3.0.0
+* Omeka S >= 3.1.0
 
 * The export path is currently hard-coded, so it is necessary to create a directory here : 
 
@@ -25,7 +25,7 @@ mkdir OMEKAS_DIR\files\Marc_XML_Export
 
 ## Features
 
-Actually this module includes an '_Unimarc_' mapping but you can also add your own custom mapping by adding on `module.config.php`:
+Actually this module includes an '_Unimarc_' mapping and a specific one for _Bokeh_ exchange but you can also add your own custom mapping by adding on `module.config.php`:
 
 ```php
 'marcxmlexport_mapping' => [

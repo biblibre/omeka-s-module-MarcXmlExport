@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="fr">
+<html class="writer-html5" lang="en">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Configuration &mdash; Documentation MarcXmlExport </title>
+  <title>Configuration &mdash; MarcXmlExport  documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
 
@@ -15,14 +15,13 @@
   
         <script src="_static/jquery.js?v=5d32c60e"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=3b36ad44"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=b3ba4146"></script>
         <script src="_static/doctools.js?v=888ff710"></script>
         <script src="_static/sphinx_highlight.js?v=4825356b"></script>
-        <script src="_static/translations.js?v=d99ca74e"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Recherche" href="search.html" />
-    <link rel="next" title="Fonctionnalités" href="features.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Features" href="features.html" />
     <link rel="prev" title="Introduction" href="index.html" /> 
 </head>
 
@@ -39,7 +38,7 @@
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Rechercher docs" aria-label="Rechercher docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -48,12 +47,12 @@
               <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Configuration</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#add-your-custom-mapping">Ajoutez votre profil de correspondances personnalisé</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#cron-clean-up">Nettoyage récurrent par cronjob</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#add-your-custom-mapping">Add your custom mapping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cron-clean-up">Cron clean-up</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="features.html">Fonctionnalités</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutoriels</a></li>
+<li class="toctree-l1"><a class="reference internal" href="features.html">Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
 </ul>
 
         </div>
@@ -72,7 +71,7 @@
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
       <li class="breadcrumb-item active">Configuration</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/configuration.rst.txt" rel="nofollow"> Afficher la source de la page</a>
+            <a href="_sources/configuration.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -81,10 +80,10 @@
            <div itemprop="articleBody">
              
   <section id="configuration">
-<h1>Configuration<a class="headerlink" href="#configuration" title="Lien permanent vers cette rubrique"></a></h1>
+<h1>Configuration<a class="headerlink" href="#configuration" title="Permalink to this heading"></a></h1>
 <section id="add-your-custom-mapping">
-<h2>Ajoutez votre profil de correspondances personnalisé<a class="headerlink" href="#add-your-custom-mapping" title="Lien permanent vers cette rubrique"></a></h2>
-<p>Pour ajouter votre propre profil de correspondances, ajoutez le au fichier <cite>module.config.php</cite> comme ceci:</p>
+<h2>Add your custom mapping<a class="headerlink" href="#add-your-custom-mapping" title="Permalink to this heading"></a></h2>
+<p>To add your own custom mapping add it on <cite>module.config.php</cite> file like:</p>
 <div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="x">&#39;marcxmlexport_mapping&#39; =&gt; [</span>
 <span class="x">    &#39;factories&#39; =&gt; [</span>
 <span class="x">        &#39;your_mapping&#39; =&gt; Path\To\Your\Mapping::class,</span>
@@ -94,12 +93,12 @@
 </div>
 </section>
 <section id="cron-clean-up">
-<h2>Nettoyage récurrent par cronjob<a class="headerlink" href="#cron-clean-up" title="Lien permanent vers cette rubrique"></a></h2>
+<h2>Cron clean-up<a class="headerlink" href="#cron-clean-up" title="Permalink to this heading"></a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Nécessite un script issu d’un <a class="reference external" href="https://git.biblibre.com/biblibre/tools/src/branch/master/omeka-s/job-start">repository</a> public de BibLibre.</p>
+<p>Need script from BibLibre public <a class="reference external" href="https://git.biblibre.com/biblibre/tools/src/branch/master/omeka-s/job-start">repository</a>.</p>
 </div>
-<p>Un script de nettoyage peut être lancé pour supprimé les fichiers stockés dans <cite>~/files/Marc_XML_Export/</cite>. Il prend un argument <cite>date</cite> qui représente la date limite à partir de laquelle les exports doivent être conservés.</p>
+<p>A script to clean up the files stored in <cite>~/files/Marc_XML_Export/</cite> can be launched from the command line by specifying a ‘date’ argument corresponding to the deadline for which you want to keep the exports.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>~/tools/omeka-s/job-start<span class="w"> </span>--user-id<span class="w"> </span>X<span class="w"> </span>--job-class<span class="w"> </span><span class="s1">&#39;MarcXmlExport\JobRemoveFilesJob&#39;</span><span class="w"> </span>--job-args<span class="w"> </span><span class="s1">&#39;{&quot;date&quot;: &quot;&lt;YEAR&gt;-&lt;MONTH&gt;-&lt;DAY&gt;&quot;}&#39;</span>
 </pre></div>
 </div>
@@ -109,9 +108,9 @@
 
            </div>
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pied de page">
-        <a href="index.html" class="btn btn-neutral float-left" title="Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Précédent</a>
-        <a href="features.html" class="btn btn-neutral float-right" title="Fonctionnalités" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="features.html" class="btn btn-neutral float-right" title="Features" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
@@ -120,9 +119,9 @@
     <p>&#169; Copyright 2023, BibLibre.</p>
   </div>
 
-  Compilé avec <a href="https://www.sphinx-doc.org/">Sphinx</a> en utilisant un
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">thème</a>
-    fourni par <a href="https://readthedocs.org">Read the Docs</a>.
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
    
 
 </footer>

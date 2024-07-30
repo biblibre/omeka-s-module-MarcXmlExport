@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MarcXmlExport \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-20 13:28+0000\n"
+"POT-Creation-Date: 2024-07-30 10:51+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -28,25 +28,29 @@ msgstr "Tutoriels"
 msgid ""
 "Currently, product files are stored in a `~/files/Marc_XML_Export` "
 "folder, which you'll need to create."
-msgstr "Actuellement, les fichiers produits sont stockés dans le dossier `~/files/Marc_XML_Export` que vous devrez créer."
+msgstr ""
+"Actuellement, les fichiers produits sont stockés dans le dossier "
+"`~/files/Marc_XML_Export` que vous devrez créer."
 
 #: ../../tutorials.rst:8
 msgid ""
 "To create a new export, simply submit the form, indicating : \"The name "
-"of the export\" \"The mapping to be used\" \"Resource type\""
-msgstr "Pour créer un nouvel export, validez simplement le formulaire en indiquant : \"Le nom de l'export\", \"Le profil de correspondances utilisé\", \"Le type de ressources\"".
+"of the export\" \"The mapping to be used\" \"Resource type\" \"Resources "
+"visibility\""
+msgstr ""
+"Pour créer un nouvel export, validez simplement le formulaire en "
+"indiquant : \"Le nom de l'export\", \"Le profil de correspondances "
+"utilisé\", \"Le type de ressources\"\"Visibilité des ressources"
 
-#: ../../tutorials.rst:15
+#: ../../tutorials.rst:16
 msgid "You will be able to filter the resources using different criteria."
 msgstr "Vous pouvez filtrer les ressources selon différents critères."
 
-#: ../../tutorials.rst:17
+#: ../../tutorials.rst:18
 msgid ""
 "You can create a cron to clean up the files in the instance's export "
 "folder. See README for technical purpose."
-msgstr "Vous pouvez créer un nettoyage récurrent grâce au cronjob intégré au module."
-
-#: ../../tutorials.rst:19
-msgid ":doc:`mapping-unimarc`"
 msgstr ""
+"Vous pouvez créer un nettoyage récurrent grâce au cronjob intégré au "
+"module."
 
