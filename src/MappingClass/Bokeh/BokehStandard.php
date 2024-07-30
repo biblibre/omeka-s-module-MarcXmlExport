@@ -74,7 +74,7 @@ class BokehStandard extends UnimarcStandard
                 'c' => $resource->created()->format('Y-m-d'),
                 'd' => $resource->modified()->format('Y-m-d'),
                 'o' => $resource->isPublic(),
-                'y' => $resource->owner() ? $resource->owner()->name() : NULL,
+                'y' => $resource->owner() ? $resource->owner()->name() : null,
             ],
             '299' => [
                 'a' => "OMEKAS",
