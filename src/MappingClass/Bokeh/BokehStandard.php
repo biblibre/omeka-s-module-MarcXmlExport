@@ -218,7 +218,6 @@ class BokehStandard extends UnimarcStandard
         $transformation = $mappingDatas['transformation'];
 
         if (! empty($values)) {
-            $field = $this->getFieldByTag($tag, $parentNode);
             if (is_array($values)) {
                 foreach ($values as $value) {
                     if ($this->isPropertyToExport($value)) {
@@ -233,28 +232,24 @@ class BokehStandard extends UnimarcStandard
                         $valueType = explode(':', $value->type())[0];
                         switch ($valueType) {
                             case 'resource':
-                                $field = $this->addResourceValue($dom, $field, $value);
+                                $field = $this->addResourceValue($parentNode, $tag, $value, $repeatableField);
                                 break;
 
                             case 'valuesuggest':
-                                $field = $this->addValueSuggestValue($dom, $field, $value);
+                                $field = $this->addValueSuggestValue($parentNode, $tag, $value, $repeatableField);
                                 break;
 
                             case 'uri':
-                                $field = $this->addUriValue($dom, $field, $value);
+                                $field = $this->addUriValue($parentNode, $tag, $value, $repeatableField);
                                 break;
 
                             default:
                                 $value = isset($transformedValue) ? $transformedValue : $value;
-                                $field = $this->addLiteralValue($dom, $field, $code, $value);
+                                $field = $this->addLiteralValue($parentNode, $tag, $code, $value, $repeatableField);
                                 break;
                         }
 
-                        if ($repeatableField && $field) {
-                            $parentNode->appendChild($field);
-                        }
-
-                        if (!$repeatableField && $field) {
+                        if ($field) {
                             $parentNode->appendChild($field);
                         }
                     }
@@ -273,28 +268,24 @@ class BokehStandard extends UnimarcStandard
                     $valueType = explode(':', $value->type())[0];
                     switch ($valueType) {
                         case 'resource':
-                            $field = $this->addResourceValue($dom, $field, $value);
+                            $field = $this->addResourceValue($parentNode, $tag, $value, $repeatableField);
                             break;
 
                         case 'valuesuggest':
-                            $field = $this->addValueSuggestValue($dom, $field, $value);
+                            $field = $this->addValueSuggestValue($parentNode, $tag, $value, $repeatableField);
                             break;
 
                         case 'uri':
-                            $field = $this->addUriValue($dom, $field, $value);
+                            $field = $this->addUriValue($parentNode, $tag, $value, $repeatableField);
                             break;
 
                         default:
                             $value = isset($transformedValue) ? $transformedValue : $value;
-                            $field = $this->addLiteralValue($dom, $field, $code, $value);
+                            $field = $this->addLiteralValue($parentNode, $tag, $code, $value, $repeatableField);
                             break;
                     }
 
-                    if ($repeatableField && $field) {
-                        $parentNode->appendChild($field);
-                    }
-
-                    if (!$repeatableField && $field) {
+                    if ($field) {
                         $parentNode->appendChild($field);
                     }
                 }
@@ -302,8 +293,11 @@ class BokehStandard extends UnimarcStandard
         }
     }
 
-    protected function addResourceValue($dom, $field, $value)
+    protected function addResourceValue($parentNode, $tag, $value, $repeatable)
     {
+        $dom = $this->getDom();
+        $field = $this->getFieldByTag($tag, $parentNode, $repeatable);
+
         $resource = $value->valueResource();
         $resourceController = $resource->getControllerName();
 

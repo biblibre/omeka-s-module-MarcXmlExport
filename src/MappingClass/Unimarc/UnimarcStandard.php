@@ -102,7 +102,7 @@ class UnimarcStandard extends AbstractMappingClass
         return $this;
     }
 
-    protected function getFieldByTag($tag, $node)
+    protected function getFieldByTag($tag, $node, $repeatable)
     {
         $dom = $this->getDom();
         $datafields = $node->getElementsByTagName('datafield');
@@ -117,7 +117,7 @@ class UnimarcStandard extends AbstractMappingClass
             }
         }
 
-        if (isset($nodeToReturn)) {
+        if (isset($nodeToReturn) && !($repeatable)) {
             return $nodeToReturn;
         } else {
             return $newField;
@@ -192,8 +192,11 @@ class UnimarcStandard extends AbstractMappingClass
         return $metadatasMapping;
     }
 
-    protected function addLiteralValue($dom, $field, $code, $value)
+    protected function addLiteralValue($parentNode, $tag, $code, $value, $repeatable)
     {
+        $dom = $this->getDom();
+        $field = $this->getFieldByTag($tag, $parentNode, $repeatable);
+
         $subfield = $dom->createElement('subfield', $this->trimAndEscape($value));
         $subfield->setAttribute('code', $code);
         $field->appendChild($subfield);
@@ -210,7 +213,6 @@ class UnimarcStandard extends AbstractMappingClass
         $transformation = $mappingDatas['transformation'];
 
         if (! empty($values)) {
-            $field = $this->getFieldByTag($tag, $parentNode);
             if (is_array($values)) {
                 foreach ($values as $value) {
                     if ($this->isPropertyToExport($value)) {
@@ -225,28 +227,24 @@ class UnimarcStandard extends AbstractMappingClass
                         $valueType = explode(':', $value->type())[0];
                         switch ($valueType) {
                             case 'resource':
-                                $field = $this->addResourceValue($dom, $field, $value);
+                                $field = $this->addResourceValue($parentNode, $tag, $value, $repeatableField);
                                 break;
 
                             case 'valuesuggest':
-                                $field = $this->addValueSuggestValue($dom, $field, $value);
+                                $field = $this->addValueSuggestValue($parentNode, $tag, $value, $repeatableField);
                                 break;
 
                             case 'uri':
-                                $field = $this->addUriValue($dom, $field, $value);
+                                $field = $this->addUriValue($parentNode, $tag, $value, $repeatableField);
                                 break;
 
                             default:
                                 $value = isset($transformedValue) ? $transformedValue : $value;
-                                $field = $this->addLiteralValue($dom, $field, $code, $value);
+                                $field = $this->addLiteralValue($parentNode, $tag, $code, $value, $repeatableField);
                                 break;
                         }
 
-                        if ($repeatableField && $field) {
-                            $parentNode->appendChild($field);
-                        }
-
-                        if (!$repeatableField && $field) {
+                        if ($field) {
                             $parentNode->appendChild($field);
                         }
                     }
@@ -265,36 +263,35 @@ class UnimarcStandard extends AbstractMappingClass
                     $valueType = explode(':', $value->type())[0];
                     switch ($valueType) {
                         case 'resource':
-                            $field = $this->addResourceValue($dom, $field, $value);
+                            $field = $this->addResourceValue($parentNode, $tag, $value, $repeatableField);
                             break;
 
                         case 'valuesuggest':
-                            $field = $this->addValueSuggestValue($dom, $field, $value);
+                            $field = $this->addValueSuggestValue($parentNode, $tag, $value, $repeatableField);
                             break;
 
                         case 'uri':
-                            $field = $this->addUriValue($dom, $field, $value);
+                            $field = $this->addUriValue($parentNode, $tag, $value, $repeatableField);
                             break;
 
                         default:
                             $value = isset($transformedValue) ? $transformedValue : $value;
-                            $field = $this->addLiteralValue($dom, $field, $code, $value);
+                            $field = $this->addLiteralValue($parentNode, $tag, $code, $value, $repeatableField);
                             break;
                     }
 
-                    if ($repeatableField && $field) {
-                        $parentNode->appendChild($field);
-                    }
-
-                    if (!$repeatableField && $field) {
+                    if ($field) {
                         $parentNode->appendChild($field);
                     }
                 }
             }
         }
     }
-    protected function addResourceValue($dom, $field, $value)
+    protected function addResourceValue($parentNode, $tag, $value, $repeatable)
     {
+        $dom = $this->getDom();
+        $field = $this->getFieldByTag($tag, $parentNode, $repeatable);
+
         $resource = $value->valueResource();
         $resourceController = $resource->getControllerName();
 
@@ -330,8 +327,11 @@ class UnimarcStandard extends AbstractMappingClass
         return $field;
     }
 
-    protected function addValueSuggestValue($dom, $field, $value)
+    protected function addValueSuggestValue($parentNode, $tag, $value, $repeatable)
     {
+        $dom = $this->getDom();
+        $field = $this->getFieldByTag($tag, $parentNode, $repeatable);
+
         $valueArray = $value->jsonSerialize();
         $valueSuggestMapping = [];
 
@@ -360,12 +360,14 @@ class UnimarcStandard extends AbstractMappingClass
                 $field->appendChild($subfield);
             }
         }
-
         return $field;
     }
 
-    protected function addUriValue($dom, $field, $value)
+    protected function addUriValue($parentNode, $tag, $value, $repeatable)
     {
+        $dom = $this->getDom();
+        $field = $this->getFieldByTag($tag, $parentNode, $repeatable);
+
         $subfieldUri = $dom->createElement('subfield', $this->trimAndEscape($value->uri()));
         $subfieldUri->setAttribute('code', 'u');
         $field->appendChild($subfieldUri);
