@@ -7,10 +7,11 @@ require dirname(__DIR__, 4) . '/bootstrap.php';
 $application = Omeka\Mvc\Application::init(require OMEKA_PATH . '/application/config/application.config.php');
 $serviceLocator = $application->getServiceManager();
 $em = $serviceLocator->get('Omeka\EntityManager');
+$authentication = $serviceLocator->get('Omeka\AuthenticationService');
 $mappingFactories = array_keys($serviceLocator->get('Config')['marcxmlexport_mapping']['factories']);
 $exporter = $serviceLocator->get('MarcXmlExport\Exporter');
 
-$options = getopt(null, ['help', 'resource-type:', 'mapping-class:', 'since-date:', 'base-path:', 'server-url:']);
+$options = getopt(null, ['help', 'resource-type:', 'mapping-class:', 'since-date:', 'base-path:', 'server-url:', 'user-email:']);
 $entitiesMap = [
     'item_sets' => 'Omeka\Entity\ItemSet',
     'items' => 'Omeka\Entity\Item',
@@ -24,7 +25,7 @@ function help()
 {
     return <<<'HELP'
 
-    export_since_date --base-path BASE_PATH --server-url SERVER_URL --resource-type RESOURCE_TYPE --mapping-class MAPPING_CLASS --since-date DATE
+    export_since_date --base-path BASE_PATH --server-url SERVER_URL -- user-email USER_EMAIL --resource-type RESOURCE_TYPE --mapping-class MAPPING_CLASS --since-date DATE
     export_since_date --help
 
     Options:
@@ -33,6 +34,9 @@ function help()
 
     --server-url SERVER_URL
         Required. Define server url like http://myOmeka.com.
+
+    --user-email USER_EMAIL
+        Required. Define the user that able to connect and launch the export
 
     --resource-type RESOURCE_TYPE
         Required. Choose which resource type will be exported ('item_sets', 'items' or 'media')
@@ -66,6 +70,12 @@ if (!isset($options['server-url'])) {
     exit(1);
 }
 
+if (!isset($options['user-email'])) {
+    fprintf(STDERR, "No user-email given; use --user-email <userEmail>\n");
+    echo help();
+    exit(1);
+}
+
 if (!isset($options['resource-type'])) {
     fprintf(STDERR, "No resource type given ; use --resource-type <resourceType> ('item_sets', 'items' or 'media')\n");
     echo help();
@@ -88,6 +98,20 @@ if (isset($options['since-date']) && !(validateDate($options['since-date']))) {
 }
 
 $viewHelperManager = $serviceLocator->get('ViewHelperManager');
+
+$userEmail = $options['user-email'];
+$user = $em->getRepository('Omeka\Entity\User')->findOneBy(
+    [
+        'email' => $userEmail,
+        'isActive' => true,
+    ]
+);
+
+if (!$user) {
+    $logger->err(sprintf('None user with mail corresponding to: %s or is not active', $userEmail));
+    exit(1);
+}
+$authentication->getStorage()->write($user);
 
 if (isset($options['base-path'])) {
     $base_path = "/" . $options['base-path'];
