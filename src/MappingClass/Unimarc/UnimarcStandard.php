@@ -172,7 +172,6 @@ class UnimarcStandard extends AbstractMappingClass
             'dcterms:contributor' => ['tag' => '702', 'repeatable' => true, 'subfield' => 'g', 'repeatable_subfield' => false],
             'dcterms:relation' => ['tag' => '856', 'repeatable' => true, 'subfield' => 'a', 'repeatable_subfield' => true],
             'dcterms:instructionalMethod' => ['tag' => '901', 'repeatable' => true, 'subfield' => 'a', 'repeatable_subfield' => true],
-            'dcterms:source' => ['tag' => '995', 'repeatable' => true, 'subfield' => 'a', 'repeatable_subfield' => false],
             'bibo:locator' => ['tag' => '995', 'repeatable' => false, 'subfield' => 'k', 'repeatable_subfield' => false],
         ];
 
