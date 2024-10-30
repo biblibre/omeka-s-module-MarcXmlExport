@@ -108,7 +108,7 @@ $user = $em->getRepository('Omeka\Entity\User')->findOneBy(
 );
 
 if (!$user) {
-    $logger->err(sprintf('None user with mail corresponding to: %s or is not active', $userEmail));
+    fprintf(STDERR, "None user with mail corresponding to configuration file setting");
     exit(1);
 }
 $authentication->getStorage()->write($user);
