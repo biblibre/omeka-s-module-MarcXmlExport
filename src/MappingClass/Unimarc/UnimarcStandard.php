@@ -61,9 +61,17 @@ class UnimarcStandard extends AbstractMappingClass
             $values = $resource->value($property, ['all' => true]);
         } else {
             $values = $resource->value($property);
+
+            if ($mappingDatas['extra_values']) {
+                $totalValues = $resource->value($property, ['all' => true]);
+                $extraValues = array_diff($totalValues, [$values]);
+            }
         }
 
         $this->processMapping($values, $mappingDatas, $parentNode);
+        if (!empty($extraValues)) {
+            $this->processMapping($extraValues, $mappingDatas['extra_values'], $parentNode);
+        }
     }
 
     protected function addElement($tag, $value, $parentNode)
