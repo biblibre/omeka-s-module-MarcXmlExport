@@ -11,7 +11,7 @@ $authentication = $serviceLocator->get('Omeka\AuthenticationService');
 $mappingFactories = array_keys($serviceLocator->get('Config')['marcxmlexport_mapping']['factories']);
 $exporter = $serviceLocator->get('MarcXmlExport\Exporter');
 
-$options = getopt(null, ['help', 'resource-type:', 'mapping-class:', 'since-date:', 'base-path:', 'server-url:', 'user-email:']);
+$options = getopt(null, ['help', 'resource-type:', 'resource-visibility:', 'mapping-class:', 'since-date:', 'base-path:', 'server-url:', 'user-email:']);
 $entitiesMap = [
     'item_sets' => 'Omeka\Entity\ItemSet',
     'items' => 'Omeka\Entity\Item',
@@ -25,7 +25,7 @@ function help()
 {
     return <<<'HELP'
 
-    export_since_date --base-path BASE_PATH --server-url SERVER_URL -- user-email USER_EMAIL --resource-type RESOURCE_TYPE --mapping-class MAPPING_CLASS --since-date DATE
+    export_since_date --base-path BASE_PATH --server-url SERVER_URL -- user-email USER_EMAIL --resource-type RESOURCE_TYPE --resource-visibility RESOURCE_VISIBILITY --mapping-class MAPPING_CLASS --since-date DATE
     export_since_date --help
 
     Options:
@@ -87,6 +87,12 @@ if (!array_key_exists($options['resource-type'], $entitiesMap)) {
     exit(1);
 }
 
+if (!isset($options['resource-visibility'])) {
+    fprintf(STDERR, "No resource visibility given ; use --resource-visibility <resourceVisibility> ('all', or 'public')\n");
+    echo help();
+    exit(1);
+}
+
 if (!isset($options['mapping-class'])) {
     fprintf(STDERR, "No mapping class  given; use --mapping-class <mappingClass> (mapping class installed from module manager)\n");
     exit(1);
@@ -137,6 +143,7 @@ $serverUrlHelper->setScheme($scheme);
 $serverUrlHelper->setHost($host);
 
 $resourceType = $options['resource-type'];
+$resourceVisibility = $options['resource-visibility'];
 
 $dql = "
         SELECT e.id FROM $entitiesMap[$resourceType] e 
@@ -168,6 +175,15 @@ if (!empty($ids)) {
         if (!isset($options['since-date'])) {
             $query = null;
         }
+        if ($resourceVisibility != 'all') {
+            $isPublic = $resourceVisibility == 'public' ? '1' : '0';
+            if (strlen($query) > 0) {
+                $query .= "&is_public=$isPublic";
+            } else {
+                $query .= "is_public=$isPublic";
+            }
+        }
+
         $xmlOutput = $exporter->exportQuery($resourceType, $query, $options['mapping-class']);
 
         $xmlOutput->formatOutput = true;
