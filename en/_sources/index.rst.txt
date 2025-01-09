@@ -21,7 +21,7 @@ Where is the configuration
 Actually `Unimarc` mapping is include in this module but you can add your own custom mapping on `module.config.php` file. (Also see :doc:`configuration`)
 It will then be accessible when the export is created under "Select class mapping" dropdown
 
-More info about `Unimarc` mapping: :doc:`mapping-unimarc`
+A specific mapping purposal is include too for `Bokeh` app exchange.
 
 .. toctree::
    :maxdepth: 2
