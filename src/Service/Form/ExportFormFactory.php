@@ -11,7 +11,7 @@ class ExportFormFactory implements FactoryInterface
     {
         $mappingManager = $services->get('MarcXmlExport\Manager');
 
-        $form = new ExportForm(null, $options);
+        $form = new ExportForm($options);
         $form->setMappingManager($mappingManager);
 
         return $form;
