@@ -1,25 +1,25 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# French translations for PACKAGE package.
+# Copyright (C) 2022 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Automatically generated, 2022.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-02-10 08:31+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2022-03-18 10:48+0000\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: view/marc-xml-export/admin/export/detail.phtml:28
 msgid "Job details"
-msgstr ""
+msgstr "Détails de la tâche"
 
 #: view/marc-xml-export/admin/index/index.phtml:4
 msgid "Exports"
@@ -32,86 +32,86 @@ msgstr ""
 
 #: view/marc-xml-export/admin/index/index.phtml:7
 msgid "New export"
-msgstr ""
+msgstr "Nouvel export"
 
 #: view/marc-xml-export/admin/index/index.phtml:11
 msgid "No exports saved yet"
-msgstr ""
+msgstr "Aucun export effectué"
 
 #: view/marc-xml-export/admin/index/index.phtml:21
 msgid "Export name"
-msgstr ""
+msgstr "Nom de l'export"
 
 #: view/marc-xml-export/admin/index/index.phtml:22
 msgid "Class mapping"
-msgstr ""
+msgstr "Modèle de correspondances"
 
 #: view/marc-xml-export/admin/index/index.phtml:24
 msgid "Resource visibility"
-msgstr ""
+msgstr "Visibilité des ressources"
 
 #: view/marc-xml-export/admin/index/index.phtml:25
 msgid "Query results"
-msgstr ""
+msgstr "Résultats de la requête"
 
 #: view/marc-xml-export/admin/index/index.phtml:26
 msgid "Job"
-msgstr ""
+msgstr "Tâche"
 
 #: view/marc-xml-export/admin/index/new.phtml:4
 msgid "Export creation"
-msgstr ""
+msgstr "Création d'export"
 
 #: src/Controller/Admin/IndexController.php:55
 #, php-format
 msgid "Exporting in background (%sjob #%d%s)"
-msgstr ""
+msgstr "Export en cours en tâche de fond (%sjob #%d%s)"
 
 #: src/Api/Adapter/ExportAdapter.php:75
 #, php-format
 msgid "The name %s is already taken."
-msgstr ""
+msgstr "Le nom %s est déjà attribué"
 
 #: src/Form/ExportForm.php:32
 msgid "Select class mapping"
-msgstr ""
+msgstr "Sélectionner un modèle de correspondances"
 
 #: src/Form/ExportForm.php:33
 msgid "Select class to process mapping"
-msgstr ""
+msgstr "Sélectionner un modèle de correspondances afin de procéder à l'export"
 
 #: src/Form/ExportForm.php:45
 msgid "Select resource type"
-msgstr ""
+msgstr "Sélectionner un type de ressource"
 
 #: src/Form/ExportForm.php:49
 msgid "Medias"
-msgstr ""
+msgstr "Médias"
 
 #: src/Form/ExportForm.php:61
 msgid "Select resources visibility"
-msgstr ""
+msgstr "Sélectionner la visibilité des ressources"
 
 #: src/Form/ExportForm.php:63
 msgid "All resources"
-msgstr ""
+msgstr "Toutes les ressources"
 
 #: src/Form/ExportForm.php:64
 msgid "Only public resources"
-msgstr ""
+msgstr "Uniquement les ressources publiques"
 
 #: src/Form/ExportForm.php:65
 msgid "Only private resources"
-msgstr ""
+msgstr "Uniquement les ressources privées"
 
 #: src/Form/ExportForm.php:77
 msgid "Specify resources in query"
-msgstr ""
+msgstr "Spécifier des ressources par une requête"
 
 #: src/Form/ExportForm.php:78
 msgid "Build or type a SQL query to select resources"
-msgstr ""
+msgstr "Construire ou saisir une reqûete SQL pour sélectionner des ressources"
 
 #: config/module.config.php:53
 msgid "Past Exports"
-msgstr ""
+msgstr "Exports passés"
