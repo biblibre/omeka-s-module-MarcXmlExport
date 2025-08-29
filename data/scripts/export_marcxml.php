@@ -193,5 +193,5 @@ if (!empty($ids)) {
         fprintf(STDERR, "Error: %s\n%s is currently configured\n", $e->getMessage(), implode(', ', $mappingFactories));
     }
 } else {
-    throw new Exception("No resources to export", 1);
+    fprintf(STDERR, "No resources to export \n");
 }
