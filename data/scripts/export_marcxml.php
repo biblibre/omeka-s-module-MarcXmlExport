@@ -11,7 +11,7 @@ $authentication = $serviceLocator->get('Omeka\AuthenticationService');
 $mappingFactories = array_keys($serviceLocator->get('Config')['marcxmlexport_mapping']['factories']);
 $exporter = $serviceLocator->get('MarcXmlExport\Exporter');
 
-$options = getopt(null, ['help', 'resource-type:', 'resource-visibility:', 'mapping-class:', 'since-date:', 'base-path:', 'server-url:', 'user-email:']);
+$options = getopt(null, ['help', 'resource-type:', 'resource-visibility:', 'mapping-class:', 'since-date:', 'base-path:', 'server-url:', 'user-email:', 'verbose']);
 $entitiesMap = [
     'item_sets' => 'Omeka\Entity\ItemSet',
     'items' => 'Omeka\Entity\Item',
@@ -25,7 +25,7 @@ function help()
 {
     return <<<'HELP'
 
-    export_since_date --base-path BASE_PATH --server-url SERVER_URL -- user-email USER_EMAIL --resource-type RESOURCE_TYPE --resource-visibility RESOURCE_VISIBILITY --mapping-class MAPPING_CLASS --since-date DATE
+    export_since_date --base-path BASE_PATH --server-url SERVER_URL -- user-email USER_EMAIL --resource-type RESOURCE_TYPE --resource-visibility RESOURCE_VISIBILITY --mapping-class MAPPING_CLASS --since-date DATE --verbose
     export_since_date --help
 
     Options:
@@ -46,6 +46,9 @@ function help()
 
     --since-date DATE
         Optionnal. Set the date from which you wish to export (e.g. '2023-06-21')
+
+    --verbose
+        Optionnal. Active script verbosity
 
     --help
         Display this help
@@ -193,5 +196,7 @@ if (!empty($ids)) {
         fprintf(STDERR, "Error: %s\n%s is currently configured\n", $e->getMessage(), implode(', ', $mappingFactories));
     }
 } else {
-    throw new Exception("No resources to export", 1);
+    if(isset($options['verbose'])) {
+        fprintf(STDOUT, "No resources to export \n");
+    }
 }
