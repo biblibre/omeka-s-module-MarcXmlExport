@@ -26,7 +26,7 @@ class BokehStandard extends UnimarcStandard
         return 'Bokeh Standard';
     }
 
-    public function getXmlFile($resources) : DOMDocument
+    public function getXmlFile($resources): DOMDocument
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $collection = $dom->createElementNS('http://www.loc.gov/MARC21/slim', 'xlms:collection');
@@ -90,6 +90,28 @@ class BokehStandard extends UnimarcStandard
 
         $fieldsMapping = $this->addResourceTemplateMap($fieldsMapping, $resource);
         $fieldsMapping = $this->addResourceClassMap($fieldsMapping, $resource);
+
+        if ($resourceType === 'o:Item') {
+            $medias = $resource->media();
+            $publicMediaIds = [];
+            if (isset($medias)) {
+                foreach ($medias as $media) {
+                    if ($media->isPublic()) {
+                        $publicMediaIds[] = $media->id();
+                    }
+                }
+            }
+            if (!empty($publicMediaIds)) {
+                $fieldsMapping['039'] = [
+                    'a' => implode(',', $publicMediaIds),
+                ];
+            }
+            $fieldsMapping['039'] = [
+                'b' => "média",
+                'c' => !empty($medias) ? 'oui' : 'non',
+                'd' => !empty($publicMediaIds) ? 'oui' : 'non'
+            ];
+        }
 
         if ($resourceType === 'o:Media') {
             $fieldsMapping['049'] = [
