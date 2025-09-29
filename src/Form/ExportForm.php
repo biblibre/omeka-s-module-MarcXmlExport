@@ -75,7 +75,7 @@ class ExportForm extends Form
             'type' => 'Omeka\Form\Element\Query',
             'options' => [
                 'label' => 'Specify resources in query', //@translate
-                'info' => 'Build or type a SQL query to select resources', //@translate
+                'info' => 'Build or type a query to select resources', //@translate
             ],
         ]);
     }

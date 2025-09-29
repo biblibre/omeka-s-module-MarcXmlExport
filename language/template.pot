@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-10 08:31+0100\n"
+"POT-Creation-Date: 2025-09-29 16:50+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -62,14 +62,14 @@ msgstr ""
 msgid "Export creation"
 msgstr ""
 
-#: src/Controller/Admin/IndexController.php:55
-#, php-format
-msgid "Exporting in background (%sjob #%d%s)"
-msgstr ""
-
 #: src/Api/Adapter/ExportAdapter.php:75
 #, php-format
 msgid "The name %s is already taken."
+msgstr ""
+
+#: src/Controller/Admin/IndexController.php:55
+#, php-format
+msgid "Exporting in background (%sjob #%d%s)"
 msgstr ""
 
 #: src/Form/ExportForm.php:32
@@ -109,7 +109,7 @@ msgid "Specify resources in query"
 msgstr ""
 
 #: src/Form/ExportForm.php:78
-msgid "Build or type a SQL query to select resources"
+msgid "Build or type a query to select resources"
 msgstr ""
 
 #: config/module.config.php:53
