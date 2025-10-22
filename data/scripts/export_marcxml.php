@@ -25,7 +25,7 @@ function help()
 {
     return <<<'HELP'
 
-    export_since_date --base-path BASE_PATH --server-url SERVER_URL -- user-email USER_EMAIL --resource-type RESOURCE_TYPE --resource-visibility RESOURCE_VISIBILITY --mapping-class MAPPING_CLASS --since-date DATE --verbose
+    export_since_date --base-path BASE_PATH --server-url SERVER_URL --user-email USER_EMAIL --resource-type RESOURCE_TYPE --resource-visibility RESOURCE_VISIBILITY --mapping-class MAPPING_CLASS --since-date DATE --verbose
     export_since_date --help
 
     Options:

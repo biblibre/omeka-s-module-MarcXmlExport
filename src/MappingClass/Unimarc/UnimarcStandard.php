@@ -342,7 +342,8 @@ class UnimarcStandard extends AbstractMappingClass
         $valueArray = $value->jsonSerialize();
         $valueSuggestMapping = [];
 
-        $valueSuggestMapping['3'] = end(explode('/', $valueArray['@id']));
+	$parts = explode('/', $valueArray['@id']);
+	$valueSuggestMapping['3'] = end($parts);
         $label = $valueArray['o:label'];
 
         if ($value->type() === 'valuesuggest:idref:person') {
