@@ -231,52 +231,18 @@ class BokehStandard extends UnimarcStandard
     protected function processMapping($values, $mappingDatas, $parentNode)
     {
         $dom = $this->getDom();
-        $repeatableField = $mappingDatas['repeatable'];
-        $code = $mappingDatas['subfield'];
-        $tag = $mappingDatas['tag'];
-        $transformation = $mappingDatas['transformation'];
+        $repeatableField = $mappingDatas['repeatable'] ?? null;
+        $code = $mappingDatas['subfield'] ?? null;
+        $tag = $mappingDatas['tag'] ?? null;
+        $transformation = $mappingDatas['transformation'] ?? null;
 
-        if (! empty($values)) {
-            if (is_array($values)) {
-                foreach ($values as $value) {
-                    if ($this->isPropertyToExport($value)) {
-                        if ($transformation) {
-                            if ($transformation['type'] == 'prefix') {
-                                $transformedValue = $transformation['value'] . $value;
-                            }
-                            if ($transformation['type'] == 'suffix') {
-                                $transformedValue .= $transformation['value'];
-                            }
-                        }
-                        $valueType = explode(':', $value->type())[0];
-                        switch ($valueType) {
-                            case 'resource':
-                                $field = $this->addResourceValue($parentNode, $tag, $value, $repeatableField);
-                                break;
+        if (!empty($values)) {
+            $valuesArray = is_array($values) ? $values : [$values]; // Standardiser
 
-                            case 'valuesuggest':
-                                $field = $this->addValueSuggestValue($parentNode, $tag, $value, $repeatableField);
-                                break;
-
-                            case 'uri':
-                                $field = $this->addUriValue($parentNode, $tag, $value, $repeatableField);
-                                break;
-
-                            default:
-                                $value = isset($transformedValue) ? $transformedValue : $value;
-                                $field = $this->addLiteralValue($parentNode, $tag, $code, $value, $repeatableField);
-                                break;
-                        }
-
-                        if ($field) {
-                            $parentNode->appendChild($field);
-                        }
-                    }
-                }
-            } else {
-                $value = $values;
+            foreach ($valuesArray as $value) {
                 if ($this->isPropertyToExport($value)) {
-                    if ($transformation) {
+                    $transformedValue = null;
+                    if ($transformation && isset($transformation['type'])) {
                         if ($transformation['type'] == 'prefix') {
                             $transformedValue = $transformation['value'] . $value;
                         }
@@ -284,7 +250,9 @@ class BokehStandard extends UnimarcStandard
                             $transformedValue .= $transformation['value'];
                         }
                     }
-                    $valueType = explode(':', $value->type())[0];
+
+                    $valueType = explode(':', $value->type())[0] ?? '';
+
                     switch ($valueType) {
                         case 'resource':
                             $field = $this->addResourceValue($parentNode, $tag, $value, $repeatableField);
@@ -299,8 +267,8 @@ class BokehStandard extends UnimarcStandard
                             break;
 
                         default:
-                            $value = isset($transformedValue) ? $transformedValue : $value;
-                            $field = $this->addLiteralValue($parentNode, $tag, $code, $value, $repeatableField);
+                            $finalValue = !empty($transformedValue) ? $transformedValue : $value;
+                            $field = $this->addLiteralValue($parentNode, $tag, $code, $finalValue, $repeatableField);
                             break;
                     }
 

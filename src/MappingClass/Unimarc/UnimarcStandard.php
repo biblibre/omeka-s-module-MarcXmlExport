@@ -17,7 +17,7 @@ class UnimarcStandard extends AbstractMappingClass
         $this->logger = $logger;
     }
 
-    public function getXmlFile($resources) : DOMDocument
+    public function getXmlFile($resources): DOMDocument
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
         $collection = $dom->createElementNS('http://www.loc.gov/MARC21/slim', 'xlms:collection');
@@ -54,15 +54,15 @@ class UnimarcStandard extends AbstractMappingClass
 
     protected function addMetadataElement($resource, $property, $mappingDatas, $parentNode)
     {
-        $repeatableField = $mappingDatas['repeatable'];
-        $repeatableSubfields = $mappingDatas['repeatable_subfield'];
+        $repeatableField = $mappingDatas['repeatable'] ?? null;
+        $repeatableSubfields = $mappingDatas['repeatable_subfield'] ?? null;
 
         if (($repeatableField) || ($repeatableSubfields)) {
             $values = $resource->value($property, ['all' => true]);
         } else {
             $values = $resource->value($property);
 
-            if ($mappingDatas['extra_values']) {
+            if (isset($mappingDatas['extra_values'])) {
                 $totalValues = $resource->value($property, ['all' => true]);
                 $extraValues = array_diff($totalValues, [$values]);
             }
@@ -214,52 +214,18 @@ class UnimarcStandard extends AbstractMappingClass
     protected function processMapping($values, $mappingDatas, $parentNode)
     {
         $dom = $this->getDom();
-        $repeatableField = $mappingDatas['repeatable'];
-        $code = $mappingDatas['subfield'];
-        $tag = $mappingDatas['tag'];
-        $transformation = $mappingDatas['transformation'];
+        $repeatableField = $mappingDatas['repeatable'] ?? null;
+        $code = $mappingDatas['subfield'] ?? null;
+        $tag = $mappingDatas['tag'] ?? null;
+        $transformation = $mappingDatas['transformation'] ?? null;
 
-        if (! empty($values)) {
-            if (is_array($values)) {
-                foreach ($values as $value) {
-                    if ($this->isPropertyToExport($value)) {
-                        if ($transformation) {
-                            if ($transformation['type'] == 'prefix') {
-                                $transformedValue = $transformation['value'] . $value;
-                            }
-                            if ($transformation['type'] == 'suffix') {
-                                $transformedValue .= $transformation['value'];
-                            }
-                        }
-                        $valueType = explode(':', $value->type())[0];
-                        switch ($valueType) {
-                            case 'resource':
-                                $field = $this->addResourceValue($parentNode, $tag, $value, $repeatableField);
-                                break;
+        if (!empty($values)) {
+            $valuesArray = is_array($values) ? $values : [$values];
 
-                            case 'valuesuggest':
-                                $field = $this->addValueSuggestValue($parentNode, $tag, $value, $repeatableField);
-                                break;
-
-                            case 'uri':
-                                $field = $this->addUriValue($parentNode, $tag, $value, $repeatableField);
-                                break;
-
-                            default:
-                                $value = isset($transformedValue) ? $transformedValue : $value;
-                                $field = $this->addLiteralValue($parentNode, $tag, $code, $value, $repeatableField);
-                                break;
-                        }
-
-                        if ($field) {
-                            $parentNode->appendChild($field);
-                        }
-                    }
-                }
-            } else {
-                $value = $values;
+            foreach ($valuesArray as $value) {
                 if ($this->isPropertyToExport($value)) {
-                    if ($transformation) {
+                    $transformedValue = null;
+                    if ($transformation && isset($transformation['type'])) {
                         if ($transformation['type'] == 'prefix') {
                             $transformedValue = $transformation['value'] . $value;
                         }
@@ -267,7 +233,8 @@ class UnimarcStandard extends AbstractMappingClass
                             $transformedValue .= $transformation['value'];
                         }
                     }
-                    $valueType = explode(':', $value->type())[0];
+                    $valueType = explode(':', $value->type())[0] ?? '';
+
                     switch ($valueType) {
                         case 'resource':
                             $field = $this->addResourceValue($parentNode, $tag, $value, $repeatableField);
@@ -282,8 +249,8 @@ class UnimarcStandard extends AbstractMappingClass
                             break;
 
                         default:
-                            $value = isset($transformedValue) ? $transformedValue : $value;
-                            $field = $this->addLiteralValue($parentNode, $tag, $code, $value, $repeatableField);
+                            $valueToAdd = $transformedValue ?? $value;
+                            $field = $this->addLiteralValue($parentNode, $tag, $code, $valueToAdd, $repeatableField);
                             break;
                     }
 
@@ -342,23 +309,30 @@ class UnimarcStandard extends AbstractMappingClass
         $valueArray = $value->jsonSerialize();
         $valueSuggestMapping = [];
 
-	$parts = explode('/', $valueArray['@id']);
-	$valueSuggestMapping['3'] = end($parts);
-        $label = $valueArray['o:label'];
+        if (isset($valueArray['@id'])) {
+            $parts = explode('/', $valueArray['@id']);
+            $valueSuggestMapping['3'] = end($parts);
+        }
 
-        if ($value->type() === 'valuesuggest:idref:person') {
-            $valueSuggestMapping['a'] = explode(',', $label)[0];
-            if (strpos($value, '(')) {
-                $valueSuggestMapping['b'] = $this->getStringBetween($label, ',', '(');
-                $valueSuggestMapping['d'] = $this->getStringBetween($label, '(', ')');
+        if (isset($valueArray['o:label'])) {
+            $label = $valueArray['o:label'];
+
+            if ($value->type() === 'valuesuggest:idref:person') {
+                $valueSuggestMapping['a'] = explode(',', $label)[0];
+                if (strpos($label, '(') !== false) {
+                    $valueSuggestMapping['b'] = $this->getStringBetween($label, ',', '(');
+                    $valueSuggestMapping['d'] = $this->getStringBetween($label, '(', ')');
+                } else {
+                    $valueSuggestMapping['b'] = explode(',', $label)[1] ?? '';
+                }
+                $valueSuggestMapping['2'] = 'idref:person';
             } else {
-                $valueSuggestMapping['b'] = explode(',', $label)[1];
+                $valueSuggestMapping['a'] = $label;
+                if (isset($valueArray['@id'])) {
+                    $valueSuggestMapping['u'] = $valueArray['@id'];
+                }
+                $valueSuggestMapping['2'] = explode(':', $value->type(), 2)[1] ?? '';
             }
-            $valueSuggestMapping['2'] = 'idref:person';
-        } else {
-            $valueSuggestMapping['a'] = $label;
-            $valueSuggestMapping['u'] = $valueArray['@id'];
-            $valueSuggestMapping['2'] = explode(':', $value->type(), 2)[1];
         }
 
         foreach ($valueSuggestMapping as $code => $valueSuggestValue) {

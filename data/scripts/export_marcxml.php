@@ -196,7 +196,7 @@ if (!empty($ids)) {
         fprintf(STDERR, "Error: %s\n%s is currently configured\n", $e->getMessage(), implode(', ', $mappingFactories));
     }
 } else {
-    if(isset($options['verbose'])) {
+    if (isset($options['verbose'])) {
         fprintf(STDOUT, "No resources to export \n");
     }
 }
